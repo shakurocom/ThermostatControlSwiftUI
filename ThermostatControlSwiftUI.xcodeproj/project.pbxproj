@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		7AB86B26B569B32776D932F8 /* Pods_ThermostatControlSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E817E31933ADECCE46D45673 /* Pods_ThermostatControlSwiftUI.framework */; };
+		F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */; };
+		F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405442B98F78E00494384 /* CGPoint+Distance.swift */; };
+		F57405482B98F7B300494384 /* DecelerationBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405472B98F7B300494384 /* DecelerationBehaviour.swift */; };
 		F5DBFAD32B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DBFAD22B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift */; };
-		F5DBFAD52B7168A00087E1E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DBFAD42B7168A00087E1E8 /* ContentView.swift */; };
+		F5DBFAD52B7168A00087E1E8 /* ThermostatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */; };
 		F5DBFAD72B7168A10087E1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */; };
 		F5DBFADA2B7168A10087E1E8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DBFAD92B7168A10087E1E8 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -18,9 +21,12 @@
 		98A12F8E63BC429BB3B4BDB2 /* Pods-ThermostatControlSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThermostatControlSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-ThermostatControlSwiftUI/Pods-ThermostatControlSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		B06997BC910891D461C77E1B /* Pods-ThermostatControlSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThermostatControlSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-ThermostatControlSwiftUI/Pods-ThermostatControlSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		E817E31933ADECCE46D45673 /* Pods_ThermostatControlSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThermostatControlSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+RoundToNearest.swift"; sourceTree = "<group>"; };
+		F57405442B98F78E00494384 /* CGPoint+Distance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Distance.swift"; sourceTree = "<group>"; };
+		F57405472B98F7B300494384 /* DecelerationBehaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecelerationBehaviour.swift; sourceTree = "<group>"; };
 		F5DBFACF2B7168A00087E1E8 /* ThermostatControlSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThermostatControlSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5DBFAD22B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermostatControlSwiftUIApp.swift; sourceTree = "<group>"; };
-		F5DBFAD42B7168A00087E1E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermostatContentView.swift; sourceTree = "<group>"; };
 		F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5DBFAD92B7168A10087E1E8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,7 +49,6 @@
 				98A12F8E63BC429BB3B4BDB2 /* Pods-ThermostatControlSwiftUI.debug.xcconfig */,
 				B06997BC910891D461C77E1B /* Pods-ThermostatControlSwiftUI.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -53,6 +58,25 @@
 				E817E31933ADECCE46D45673 /* Pods_ThermostatControlSwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F57405422B98F77400494384 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */,
+				F57405442B98F78E00494384 /* CGPoint+Distance.swift */,
+				F57405472B98F7B300494384 /* DecelerationBehaviour.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		F57405492B98F83100494384 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F5DBFAD82B7168A10087E1E8 /* Preview Content */,
+				F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		F5DBFAC62B7168A00087E1E8 = {
@@ -76,10 +100,10 @@
 		F5DBFAD12B7168A00087E1E8 /* ThermostatControlSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */,
 				F5DBFAD22B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift */,
-				F5DBFAD42B7168A00087E1E8 /* ContentView.swift */,
-				F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */,
-				F5DBFAD82B7168A10087E1E8 /* Preview Content */,
+				F57405422B98F77400494384 /* Helpers */,
+				F57405492B98F83100494384 /* Resources */,
 			);
 			path = ThermostatControlSwiftUI;
 			sourceTree = "<group>";
@@ -100,6 +124,7 @@
 			buildConfigurationList = F5DBFADD2B7168A10087E1E8 /* Build configuration list for PBXNativeTarget "ThermostatControlSwiftUI" */;
 			buildPhases = (
 				13174F2F313C593F137FE010 /* [CP] Check Pods Manifest.lock */,
+				F5B3AB992B98F915007FE8A6 /* SwiftLint */,
 				F5DBFACB2B7168A00087E1E8 /* Sources */,
 				F5DBFACC2B7168A00087E1E8 /* Frameworks */,
 				F5DBFACD2B7168A00087E1E8 /* Resources */,
@@ -199,6 +224,25 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ThermostatControlSwiftUI/Pods-ThermostatControlSwiftUI-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F5B3AB992B98F915007FE8A6 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -206,8 +250,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5DBFAD52B7168A00087E1E8 /* ContentView.swift in Sources */,
+				F5DBFAD52B7168A00087E1E8 /* ThermostatContentView.swift in Sources */,
+				F57405482B98F7B300494384 /* DecelerationBehaviour.swift in Sources */,
+				F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */,
 				F5DBFAD32B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift in Sources */,
+				F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,7 +298,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -314,7 +361,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -341,7 +388,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ThermostatControlSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ThermostatControlSwiftUI/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = MW2UF479VW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -371,7 +418,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ThermostatControlSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ThermostatControlSwiftUI/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = MW2UF479VW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

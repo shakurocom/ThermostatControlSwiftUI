@@ -1,16 +1,20 @@
 PODS:
   - lottie-ios (4.4.0)
+  - SwiftLint (0.54.0)
 
 DEPENDENCIES:
   - lottie-ios (= 4.4.0)
+  - SwiftLint (= 0.54.0)
 
 SPEC REPOS:
   trunk:
     - lottie-ios
+    - SwiftLint
 
 SPEC CHECKSUMS:
   lottie-ios: ef1be1f90d54255f08e09d767950e43714661178
+  SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
 
-PODFILE CHECKSUM: 90f376047b3abc588af4c53b2137a412c2e1c0d9
+PODFILE CHECKSUM: 94ce5165179d06e78d7e55bcd0884e675e49c9c6
 
 COCOAPODS: 1.14.2
