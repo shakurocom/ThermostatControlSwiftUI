@@ -12,8 +12,8 @@ struct ThermostatContentView: View {
         HStack(spacing: 0) {
             VStack {
                 GlowingButton(image: Image(systemName: "snowflake"),
-                              title: "Auto",
-                              selectedColor: .red,
+                              title: nil,
+                              selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
                               cornerRadius: 16)
                 .frame(width: 80, height: 80)
             }

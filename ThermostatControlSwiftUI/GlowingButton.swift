@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Shakuro_CommonTypes
 
 struct GlowingButton: View {
 
@@ -52,36 +53,39 @@ struct GlowingButton: View {
     }
 
     @ViewBuilder private func makeBody() -> some View {
-  
-            HStack {
-                Spacer().frame(width: 24)
-                if let actualTitle = title {
-                    if state.contains([.selected, .enabled]) {
-                        Text(actualTitle)
-                            .foregroundColor(currentColor)
-                            .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
-                    } else {
-                        Text(actualTitle)
-                            .foregroundColor(currentColor)
-                            .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
-                            .opacity(0.2)
-                    }
-                }
+        HStack {
+            Spacer().frame(width: 24)
+
+            if state.contains([.selected, .enabled]) {
+                makeContent()
+            } else {
+                makeContent().opacity(0.2)
+            }
+
+            Spacer().frame(width: 24)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .animation(.easeInOut(duration: 0.1), value: state)
+    }
+
+    @ViewBuilder private func makeContent() -> some View {
+        HStack {
+            if let actualTitle = title {
+                Text(actualTitle)
+                    .foregroundColor(currentColor)
+                    .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
+            }
+
+            if image != nil, !(title?.isEmpty ?? true) {
                 Spacer(minLength: 16)
-                if let actualImage = image {
-                    if state.contains([.selected, .enabled]) {
-                        actualImage.font(.system(size: 24, weight: .regular))
-                            .foregroundColor(currentColor)
-                            .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
-                    } else {
-                        actualImage.font(.system(size: 24, weight: .regular))
-                            .foregroundColor(currentColor)
-                            .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
-                            .opacity(0.2)
-                    }
-                }
-                Spacer().frame(width: 24)
-            }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+
+            if let actualImage = image {
+                actualImage.font(.system(size: 24, weight: .regular))
+                    .foregroundColor(currentColor)
+                    .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
+            }
+        }
     }
 
 }
@@ -90,8 +94,12 @@ struct GlowingButton: View {
     VStack(alignment: .center, content: {
         GlowingButton(image: Image(systemName: "snowflake"),
                       title: "Auto",
-                      selectedColor: .red, 
+                      selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
                       cornerRadius: 16).frame(width: 164, height: 80)
+        GlowingButton(image: Image(systemName: "snowflake"),
+                      title: nil,
+                      selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
+                      cornerRadius: 16).frame(width: 80, height: 80)
     })
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.black)
