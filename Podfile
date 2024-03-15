@@ -9,6 +9,7 @@ target 'ThermostatControlSwiftUI' do
 
 pod 'lottie-ios', '4.4.0'
 pod 'SwiftLint', '0.54.0'
+pod 'Shakuro.CommonTypes', '1.1.0'
 
 end
 

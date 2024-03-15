@@ -11,12 +11,19 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>SwiftLint.xcscheme</key>
+		<key>Shakuro.CommonTypes.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
+		</dict>
+		<key>SwiftLint.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>lottie-ios-Lottie_Privacy.xcscheme</key>
 		<dict>
