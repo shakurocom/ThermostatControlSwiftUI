@@ -14,7 +14,8 @@ struct ThermostatContentView: View {
                 GlowingButton(image: Image(systemName: "snowflake"),
                               title: nil,
                               selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
-                              cornerRadius: 16)
+                              cornerRadius: 16,
+                              animateImageOnSelectionChanged: true)
                 .frame(width: 80, height: 80)
             }
             .frame(maxWidth: .infinity,

@@ -20,6 +20,7 @@ struct GlowingButton: View {
     let title: String?
     let selectedColor: Color
     let cornerRadius: CGFloat
+    let animateImageOnSelectionChanged: Bool
 
     @State private var state: ControlState = [.enabled]
 
@@ -53,23 +54,23 @@ struct GlowingButton: View {
     }
 
     @ViewBuilder private func makeBody() -> some View {
-        HStack {
-            Spacer().frame(width: 24)
-
-            if state.contains([.selected, .enabled]) {
-                makeContent()
-            } else {
-                makeContent().opacity(0.2)
-            }
-
-            Spacer().frame(width: 24)
+        ZStack {
+            // if state.contains([.selected, .enabled]) {
+               // makeContent()
+            // } else {
+                makeContent().opacity(state.contains([.selected, .enabled]) ? 1.0 : 0.2)
+           // }
+            makeSelectionIndicator()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.easeInOut(duration: 0.1), value: state)
+
     }
 
     @ViewBuilder private func makeContent() -> some View {
         HStack {
+            Spacer().frame(width: 24)
+
             if let actualTitle = title {
                 Text(actualTitle)
                     .foregroundColor(currentColor)
@@ -84,8 +85,31 @@ struct GlowingButton: View {
                 actualImage.font(.system(size: 24, weight: .regular))
                     .foregroundColor(currentColor)
                     .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
+                    .rotationEffect(.degrees(state.contains([.selected]) ? 0 : 180))
+                    .animation(.easeInOut(duration: 0.5), value: state)
             }
-        }
+
+            Spacer().frame(width: 24)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+
+    @ViewBuilder private func makeSelectionIndicator() -> some View {
+        HStack(content: {
+            Spacer(minLength: 20)
+            Color(selectedColor)
+                .frame(width: state.contains([.selected]) ? .infinity : 0, height: 3)
+                .clipShape(
+                    .rect(
+                        topLeadingRadius: 8,
+                        bottomLeadingRadius: 0,
+                        bottomTrailingRadius: 0,
+                        topTrailingRadius: 8
+                    )
+                )
+                .shadow(color: selectedColor, radius: 16, x: 0, y: 0)
+                .animation(.easeInOut(duration: 0.2), value: state)
+            Spacer(minLength: 20)
+        }).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
 
 }
@@ -95,11 +119,13 @@ struct GlowingButton: View {
         GlowingButton(image: Image(systemName: "snowflake"),
                       title: "Auto",
                       selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
-                      cornerRadius: 16).frame(width: 164, height: 80)
+                      cornerRadius: 16,
+                      animateImageOnSelectionChanged: true).frame(width: 164, height: 80)
         GlowingButton(image: Image(systemName: "snowflake"),
                       title: nil,
                       selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
-                      cornerRadius: 16).frame(width: 80, height: 80)
+                      cornerRadius: 16,
+                      animateImageOnSelectionChanged: false).frame(width: 80, height: 80)
     })
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(.black)
