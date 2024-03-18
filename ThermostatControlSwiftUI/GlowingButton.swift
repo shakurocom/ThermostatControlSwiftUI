@@ -35,6 +35,10 @@ struct GlowingButton: View {
     private var contentOpacity: CGFloat {
         return state.contains([.selected, .enabled]) ? 1.0 : 0.2
     }
+    
+    private var shadowRadius: CGFloat {
+        return state.contains([.selected, .enabled]) ? 16 : 0
+    }
 
     var body: some View {
         Button(action: {
@@ -55,16 +59,12 @@ struct GlowingButton: View {
 
     @ViewBuilder private func makeBody() -> some View {
         ZStack {
-            // if state.contains([.selected, .enabled]) {
-               // makeContent()
-            // } else {
-                makeContent().opacity(state.contains([.selected, .enabled]) ? 1.0 : 0.2)
-           // }
+            makeContent().opacity(state.contains([.selected, .enabled]) ? 1.0 : 0.2)
             makeSelectionIndicator()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.easeInOut(duration: 0.1), value: state)
-
+        
     }
 
     @ViewBuilder private func makeContent() -> some View {
@@ -74,7 +74,7 @@ struct GlowingButton: View {
             if let actualTitle = title {
                 Text(actualTitle)
                     .foregroundColor(currentColor)
-                    .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
+                    .shadow(color: currentColor.opacity(0.5), radius: shadowRadius, x: 0, y: 0)
             }
 
             if image != nil, !(title?.isEmpty ?? true) {
@@ -84,7 +84,8 @@ struct GlowingButton: View {
             if let actualImage = image {
                 actualImage.font(.system(size: 24, weight: .regular))
                     .foregroundColor(currentColor)
-                    .shadow(color: currentColor.opacity(0.5), radius: 16, x: 0, y: 0)
+                    .animation(nil, value: state)
+                    .shadow(color: currentColor.opacity(0.5), radius: shadowRadius, x: 0, y: 0)
                     .rotationEffect(.degrees(state.contains([.selected]) ? 0 : 180))
                     .animation(.easeInOut(duration: 0.5), value: state)
             }
@@ -106,8 +107,8 @@ struct GlowingButton: View {
                         topTrailingRadius: 8
                     )
                 )
-                .shadow(color: selectedColor, radius: 16, x: 0, y: 0)
-                .animation(.easeInOut(duration: 0.2), value: state)
+                .shadow(color: selectedColor.opacity(0.5), radius: shadowRadius, x: 0, y: 0)
+                .animation(.easeInOut(duration: 0.4), value: state)
             Spacer(minLength: 20)
         }).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
