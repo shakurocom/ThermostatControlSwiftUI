@@ -35,7 +35,7 @@ struct GlowingButton: View {
     private var contentOpacity: CGFloat {
         return state.contains([.selected, .enabled]) ? 1.0 : 0.2
     }
-    
+
     private var shadowRadius: CGFloat {
         return state.contains([.selected, .enabled]) ? 16 : 0
     }
@@ -64,7 +64,6 @@ struct GlowingButton: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .animation(.easeInOut(duration: 0.1), value: state)
-        
     }
 
     @ViewBuilder private func makeContent() -> some View {
@@ -81,17 +80,25 @@ struct GlowingButton: View {
                 Spacer(minLength: 16)
             }
 
-            if let actualImage = image {
-                actualImage.font(.system(size: 24, weight: .regular))
-                    .foregroundColor(currentColor)
-                    .animation(nil, value: state)
-                    .shadow(color: currentColor.opacity(0.5), radius: shadowRadius, x: 0, y: 0)
-                    .rotationEffect(.degrees(state.contains([.selected]) ? 0 : 180))
+            if animateImageOnSelectionChanged {
+                makeImage()
+                    .rotationEffect(.degrees(state.contains([.selected]) ? 0 : -180))
                     .animation(.easeInOut(duration: 0.5), value: state)
+            } else {
+                makeImage()
             }
 
             Spacer().frame(width: 24)
         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+
+    @ViewBuilder private func makeImage() -> some View {
+        if let actualImage = image {
+            actualImage.font(.system(size: 24, weight: .regular))
+                .foregroundColor(currentColor)
+                .animation(nil, value: state)
+                .shadow(color: currentColor.opacity(0.5), radius: shadowRadius, x: 0, y: 0)
+        }
     }
 
     @ViewBuilder private func makeSelectionIndicator() -> some View {

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7AB86B26B569B32776D932F8 /* Pods_ThermostatControlSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E817E31933ADECCE46D45673 /* Pods_ThermostatControlSwiftUI.framework */; };
+		F5007B422BA98F9100940F6C /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5007B412BA98F9100940F6C /* Stylesheet.swift */; };
+		F5007B442BA994C500940F6C /* SF-Pro-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5007B432BA994C500940F6C /* SF-Pro-Rounded-Regular.otf */; };
 		F571BD052B99C05D007E730F /* GlowingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F571BD042B99C05D007E730F /* GlowingButton.swift */; };
 		F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */; };
 		F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405442B98F78E00494384 /* CGPoint+Distance.swift */; };
@@ -22,6 +24,9 @@
 		98A12F8E63BC429BB3B4BDB2 /* Pods-ThermostatControlSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThermostatControlSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-ThermostatControlSwiftUI/Pods-ThermostatControlSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
 		B06997BC910891D461C77E1B /* Pods-ThermostatControlSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThermostatControlSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-ThermostatControlSwiftUI/Pods-ThermostatControlSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		E817E31933ADECCE46D45673 /* Pods_ThermostatControlSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThermostatControlSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5007B412BA98F9100940F6C /* Stylesheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
+		F5007B432BA994C500940F6C /* SF-Pro-Rounded-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Regular.otf"; sourceTree = "<group>"; };
+		F5007B452BA996FF00940F6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F571BD042B99C05D007E730F /* GlowingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingButton.swift; sourceTree = "<group>"; };
 		F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+RoundToNearest.swift"; sourceTree = "<group>"; };
 		F57405442B98F78E00494384 /* CGPoint+Distance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Distance.swift"; sourceTree = "<group>"; };
@@ -75,6 +80,7 @@
 		F57405492B98F83100494384 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F5007B432BA994C500940F6C /* SF-Pro-Rounded-Regular.otf */,
 				F5DBFAD82B7168A10087E1E8 /* Preview Content */,
 				F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */,
 			);
@@ -102,7 +108,9 @@
 		F5DBFAD12B7168A00087E1E8 /* ThermostatControlSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				F5007B452BA996FF00940F6C /* Info.plist */,
 				F571BD042B99C05D007E730F /* GlowingButton.swift */,
+				F5007B412BA98F9100940F6C /* Stylesheet.swift */,
 				F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */,
 				F5DBFAD22B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift */,
 				F57405422B98F77400494384 /* Helpers */,
@@ -182,6 +190,7 @@
 			files = (
 				F5DBFADA2B7168A10087E1E8 /* Preview Assets.xcassets in Resources */,
 				F5DBFAD72B7168A10087E1E8 /* Assets.xcassets in Resources */,
+				F5007B442BA994C500940F6C /* SF-Pro-Rounded-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +266,7 @@
 				F57405482B98F7B300494384 /* DecelerationBehaviour.swift in Sources */,
 				F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */,
 				F571BD052B99C05D007E730F /* GlowingButton.swift in Sources */,
+				F5007B422BA98F9100940F6C /* Stylesheet.swift in Sources */,
 				F5DBFAD32B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift in Sources */,
 				F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */,
 			);
@@ -396,6 +406,7 @@
 				DEVELOPMENT_TEAM = MW2UF479VW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ThermostatControlSwiftUI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -426,6 +437,7 @@
 				DEVELOPMENT_TEAM = MW2UF479VW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ThermostatControlSwiftUI/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
