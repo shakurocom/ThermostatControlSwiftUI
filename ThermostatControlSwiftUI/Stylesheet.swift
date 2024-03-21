@@ -6,11 +6,11 @@ public enum Stylesheet {
     // MARK: - Colors
 
     enum Color {
-        static let coldMode = UIColor(hex: "#00E0FF")
-        static let hotMode = UIColor(hex: "#FFC700")
-        static let autoMode = UIColor(hex: "#30D158")
+        static let coldMode = SwiftUI.Color(UIColor(hex: "#00E0FF") ?? .blue)
+        static let hotMode = SwiftUI.Color(UIColor(hex: "#FFC700") ?? .orange)
+        static let autoMode = SwiftUI.Color(UIColor(hex: "#30D158") ?? .green)
     }
-
+    
     // MARK: - Fonts
 
     enum FontFace: String {
