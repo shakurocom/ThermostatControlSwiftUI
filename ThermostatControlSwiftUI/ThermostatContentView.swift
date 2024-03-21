@@ -13,8 +13,27 @@ struct ThermostatContentView: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 VStack {
+                    Spacer()
+
+                    // Labels
+                    VStack(spacing: -12, content: {
+                        Text("°F")
+                            .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
+                            .foregroundColor(.white.opacity(0.5))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("68")
+                            .lineLimit(0)
+                            .font(Stylesheet.FontFace.SFProRoundedBold.font(104))
+                            .minimumScaleFactor(0.8)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    })
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.black)
+
+                    Spacer().frame(height: 46)
+
                     // Bottom buttons
-                   Spacer()
                     VStack(spacing: 4, content: {
                         GlowingButton(image: Image(systemName: "a.circle"),
                                       title: "Auto",
@@ -22,7 +41,7 @@ struct ThermostatContentView: View {
                                       cornerRadius: 16,
                                       animateImageOnSelectionChanged: false)
                         .frame(width: 164, height: 80)
-                        .font(Stylesheet.FontFace.SFProRoundedRegular.font(20))
+                        .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
                         HStack(spacing: 4) {
                             GlowingButton(image: Image(systemName: "snowflake"),
                                           title: nil,

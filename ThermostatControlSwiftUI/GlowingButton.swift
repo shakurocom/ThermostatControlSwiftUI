@@ -94,7 +94,7 @@ struct GlowingButton: View {
 
     @ViewBuilder private func makeImage() -> some View {
         if let actualImage = image {
-            actualImage.font(.system(size: 24, weight: .regular))
+            actualImage.font(.system(size: 24, weight: .bold))
                 .foregroundColor(currentColor)
                 .animation(nil, value: state)
                 .shadow(color: currentColor.opacity(0.5), radius: shadowRadius, x: 0, y: 0)
