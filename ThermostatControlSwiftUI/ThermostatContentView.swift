@@ -19,47 +19,7 @@ struct ThermostatContentView: View {
                     Spacer().frame(height: 30)
 
                     // Controls
-                    VStack(alignment: .leading, spacing: 4, content: {
-                        HStack(alignment: .center) {
-                            Menu(content: {
-                                Button("Living Room") {
-                                    roomName = "Living Room"
-                                }
-                                Button("Living Room 2") {
-                                    roomName = "Living Room 2"
-                                }
-                                Button("Dining room") {
-                                    roomName = "Dining room"
-                                }
-                            }, label: {
-                                HStack(content: {
-                                    Text(roomName)
-                                        .minimumScaleFactor(0.8)
-                                        .font(Stylesheet.FontFace.SFProRoundedBold.font(16))
-                                        .foregroundColor(.white)
-                                    Spacer()
-                                    Text("􀆈")
-                                        .font(Stylesheet.FontFace.SFProRoundedBold.font(14))
-                                        .foregroundColor(.white.opacity(0.5))
-                                }).frame(maxHeight: .infinity)
-                            }).frame(maxHeight: .infinity)
-                        }
-                        .padding(.horizontal, 20)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 64)
-                        .background(.white.opacity(0.08))
-                        .cornerRadius(12)
-                        
-                        HStack(content: {
-                            Toggle("On/Of", isOn: $isEnabled)
-                                .labelsHidden()
-                                .tint(Stylesheet.Color.coldMode)
-                        })
-                        .padding(.horizontal, 20)
-                        .frame(height: 64)
-                        .background(.white.opacity(0.08))
-                        .cornerRadius(12)
-                    })
+                    makeControls()
 
                     Spacer()
 
@@ -94,9 +54,52 @@ struct ThermostatContentView: View {
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .background(.black)
     }
+    
+    @ViewBuilder private func makeControls() -> some View {
+        VStack(alignment: .leading, spacing: 4, content: {
+            HStack(alignment: .center) {
+                Menu(content: {
+                    Button("Living Room") {
+                        roomName = "Living Room"
+                    }
+                    Button("Living Room 2") {
+                        roomName = "Living Room 2"
+                    }
+                    Button("Dining room") {
+                        roomName = "Dining room"
+                    }
+                }, label: {
+                    HStack(content: {
+                        Text(roomName)
+                            .minimumScaleFactor(0.8)
+                            .font(Stylesheet.FontFace.SFProRoundedBold.font(16))
+                            .foregroundColor(.white)
+                        Spacer()
+                        Text("􀆈")
+                            .font(Stylesheet.FontFace.SFProRoundedBold.font(14))
+                            .foregroundColor(.white.opacity(0.5))
+                    }).frame(maxHeight: .infinity)
+                }).frame(maxHeight: .infinity)
+            }
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity)
+            .frame(height: 64)
+            .background(.white.opacity(0.08))
+            .cornerRadius(12)
+
+            HStack(content: {
+                Toggle("On/Of", isOn: $isEnabled)
+                    .labelsHidden()
+                    .tint(Stylesheet.Color.coldMode)
+            })
+            .padding(.horizontal, 20)
+            .frame(height: 64)
+            .background(.white.opacity(0.08))
+            .cornerRadius(12)
+        })
+    }
 
     @ViewBuilder private func makeLabels() -> some View {
-
         VStack(spacing: -12, content: {
             Text("°F")
                 .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
@@ -114,7 +117,6 @@ struct ThermostatContentView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         })
         .frame(maxWidth: .infinity, alignment: .leading)
-
     }
 
     @ViewBuilder private func makeBottomButtons() -> some View {

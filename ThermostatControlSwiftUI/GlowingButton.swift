@@ -105,7 +105,8 @@ struct GlowingButton: View {
         HStack(content: {
             Spacer(minLength: 20)
             Color(selectedColor)
-                .frame(width: state.contains([.selected]) ? .infinity : 0, height: 3)
+                .frame(maxWidth: state.contains([.selected]) ? .infinity : 0)
+                .frame(height: 3)
                 .clipShape(
                     .rect(
                         topLeadingRadius: 8,
