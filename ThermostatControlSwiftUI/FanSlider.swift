@@ -42,21 +42,32 @@ struct FanSlider: View {
         .frame(height: 80)
         .background(.white.opacity(0.08))
         .cornerRadius(12)
+
         .onChange(of: value) { oldValue, newValue in
-            if oldValue > newValue {
-                leftFunRotation -= 6
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    rightFunRotation = roundedRotation(valueDegrees: rightFunRotation,
-                                                       toDegrees: 90,
-                                                       reversed: false)
-                }
-            } else {
-                rightFunRotation += 6
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    leftFunRotation = roundedRotation(valueDegrees: leftFunRotation,
-                                                      toDegrees: 90,
-                                                      reversed: true)
-                }
+           onSliderValueChange(oldValue: oldValue, newValue: newValue)
+        }
+    }
+
+}
+
+// MARK: - Private
+
+private extension FanSlider {
+
+    private func onSliderValueChange(oldValue: CGFloat, newValue: CGFloat) {
+        if oldValue > newValue {
+            leftFunRotation -= 6
+            withAnimation(.easeInOut(duration: 0.3)) {
+                rightFunRotation = roundedRotation(valueDegrees: rightFunRotation,
+                                                   toDegrees: 90,
+                                                   reversed: false)
+            }
+        } else {
+            rightFunRotation += 6
+            withAnimation(.easeInOut(duration: 0.3)) {
+                leftFunRotation = roundedRotation(valueDegrees: leftFunRotation,
+                                                  toDegrees: 90,
+                                                  reversed: true)
             }
         }
     }
