@@ -12,8 +12,6 @@ struct ThermostatContentView: View {
     @State private var isEnabled = true
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
-    
-    @State private var rotation: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -41,18 +39,8 @@ struct ThermostatContentView: View {
                 .frame(maxHeight: .infinity)
                 .background(Color.black)
 
-                Image("drum")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .mask {
-                        Image("drumMask")
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .rotationEffect(.degrees(-rotation))
-                    }
-                    .rotationEffect(.degrees(rotation))
-                    .frame(minWidth: 0, alignment: .leading)
-                    .background(Color.black)
+                DrumView()
+
             }
 
             Spacer(minLength: 72)
@@ -79,10 +67,6 @@ private extension ThermostatContentView {
                     Button("Living Room") {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             roomName = "Living Room"
-                        }
-                        // TODO: - test
-                        withAnimation(.easeInOut(duration: 3.3)) {
-                            rotation += 45
                         }
                     }
                     Button("Living Room 2") {
