@@ -16,6 +16,7 @@ struct ThermostatContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
+
                 VStack(alignment: .leading) {
                     Spacer().frame(height: 30)
 
@@ -35,20 +36,30 @@ struct ThermostatContentView: View {
                         .background(Color.black)
                 }
                 .frame(width: 164)
-                .frame(maxHeight: .infinity)
+                .frame(minWidth: 164, maxHeight: .infinity)
                 .background(Color.black)
 
-                VStack {
+                GeometryReader { _ in
+                    Image(ImageResource(name: "drum", bundle: .main))
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .mask {
+                            Image(ImageResource(name: "drumMask", bundle: .main))
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.green)
+                .background(Color.black)
+
             }
 
             Spacer(minLength: 72)
 
             FanSlider(value: $fanSpeed)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+        .containerRelativeFrame([.horizontal, .vertical])
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .background(.black)
     }
