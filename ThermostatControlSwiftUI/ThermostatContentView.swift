@@ -60,6 +60,7 @@ struct ThermostatContentView: View {
 // MARK: View Builders
 
 private extension ThermostatContentView {
+
     @ViewBuilder private func makeControls() -> some View {
         VStack(alignment: .leading, spacing: 4, content: {
             HStack(alignment: .center) {
@@ -155,6 +156,7 @@ private extension ThermostatContentView {
             }
         })
     }
+
 }
 
 #Preview {

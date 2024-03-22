@@ -10,7 +10,7 @@ public enum Stylesheet {
         static let hotMode = SwiftUI.Color(UIColor(hex: "#FFC700") ?? .orange)
         static let autoMode = SwiftUI.Color(UIColor(hex: "#30D158") ?? .green)
     }
-    
+
     // MARK: - Fonts
 
     enum FontFace: String {

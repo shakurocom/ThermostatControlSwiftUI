@@ -57,6 +57,14 @@ struct GlowingButton: View {
         .cornerRadius(cornerRadius)
     }
 
+}
+
+// MARK: - Private
+
+// MARK: View Builders
+
+private extension GlowingButton {
+
     @ViewBuilder private func makeBody() -> some View {
         ZStack {
             makeContent().opacity(state.contains([.selected, .enabled]) ? 1.0 : 0.2)
