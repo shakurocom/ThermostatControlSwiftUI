@@ -11,6 +11,7 @@ struct ThermostatContentView: View {
 
     @State private var isEnabled = true
     @State private var roomName = "Living Room"
+    @State private var fanSpeed: CGFloat = 0.5
 
     var body: some View {
         VStack(spacing: 0) {
@@ -21,7 +22,7 @@ struct ThermostatContentView: View {
                     // Controls
                     makeControls()
 
-                    Spacer()
+                    Spacer(minLength: 8)
 
                     // Labels
                     makeLabels()
@@ -43,30 +44,33 @@ struct ThermostatContentView: View {
                 .background(Color.green)
             }
 
-            ZStack {
-                
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 80)
-            .background(Color.blue)
+            Spacer(minLength: 72)
+
+            FanSlider(value: $fanSpeed)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .background(.black)
     }
-    
+
     @ViewBuilder private func makeControls() -> some View {
         VStack(alignment: .leading, spacing: 4, content: {
             HStack(alignment: .center) {
                 Menu(content: {
                     Button("Living Room") {
-                        roomName = "Living Room"
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            roomName = "Living Room"
+                        }
                     }
                     Button("Living Room 2") {
-                        roomName = "Living Room 2"
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            roomName = "Living Room 2"
+                        }
                     }
                     Button("Dining room") {
-                        roomName = "Dining room"
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            roomName = "Dining Room"
+                        }
                     }
                 }, label: {
                     HStack(content: {

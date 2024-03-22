@@ -16,6 +16,7 @@ public enum Stylesheet {
     enum FontFace: String {
         case SFProRoundedRegular = "SFProRounded-Regular"
         case SFProRoundedBold = "SFProRounded-Bold"
+        case SFProRoundedSemiBold = "SFProRounded-SemiBold"
         case SFProRoundedMedium = "SFProRounded-Medium"
     }
 }

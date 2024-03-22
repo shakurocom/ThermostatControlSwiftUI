@@ -12,6 +12,8 @@
 		F5007B442BA994C500940F6C /* SF-Pro-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5007B432BA994C500940F6C /* SF-Pro-Rounded-Regular.otf */; };
 		F55C00792BAC203E00FA0F86 /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F55C00772BAC203E00FA0F86 /* SF-Pro-Rounded-Bold.otf */; };
 		F55C007A2BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F55C00782BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf */; };
+		F56A807B2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */; };
+		F56A807D2BAD61640057532F /* FanSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56A807C2BAD61640057532F /* FanSlider.swift */; };
 		F571BD052B99C05D007E730F /* GlowingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F571BD042B99C05D007E730F /* GlowingButton.swift */; };
 		F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */; };
 		F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405442B98F78E00494384 /* CGPoint+Distance.swift */; };
@@ -31,6 +33,8 @@
 		F5007B452BA996FF00940F6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F55C00772BAC203E00FA0F86 /* SF-Pro-Rounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Bold.otf"; sourceTree = "<group>"; };
 		F55C00782BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
+		F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
+		F56A807C2BAD61640057532F /* FanSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanSlider.swift; sourceTree = "<group>"; };
 		F571BD042B99C05D007E730F /* GlowingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingButton.swift; sourceTree = "<group>"; };
 		F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+RoundToNearest.swift"; sourceTree = "<group>"; };
 		F57405442B98F78E00494384 /* CGPoint+Distance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Distance.swift"; sourceTree = "<group>"; };
@@ -84,6 +88,7 @@
 		F57405492B98F83100494384 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */,
 				F55C00772BAC203E00FA0F86 /* SF-Pro-Rounded-Bold.otf */,
 				F55C00782BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf */,
 				F5007B432BA994C500940F6C /* SF-Pro-Rounded-Regular.otf */,
@@ -115,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				F5007B452BA996FF00940F6C /* Info.plist */,
+				F56A807C2BAD61640057532F /* FanSlider.swift */,
 				F571BD042B99C05D007E730F /* GlowingButton.swift */,
 				F5007B412BA98F9100940F6C /* Stylesheet.swift */,
 				F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */,
@@ -195,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5DBFADA2B7168A10087E1E8 /* Preview Assets.xcassets in Resources */,
+				F56A807B2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf in Resources */,
 				F55C007A2BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf in Resources */,
 				F55C00792BAC203E00FA0F86 /* SF-Pro-Rounded-Bold.otf in Resources */,
 				F5DBFAD72B7168A10087E1E8 /* Assets.xcassets in Resources */,
@@ -272,6 +279,7 @@
 			files = (
 				F5DBFAD52B7168A00087E1E8 /* ThermostatContentView.swift in Sources */,
 				F57405482B98F7B300494384 /* DecelerationBehaviour.swift in Sources */,
+				F56A807D2BAD61640057532F /* FanSlider.swift in Sources */,
 				F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */,
 				F571BD052B99C05D007E730F /* GlowingButton.swift in Sources */,
 				F5007B422BA98F9100940F6C /* Stylesheet.swift in Sources */,
