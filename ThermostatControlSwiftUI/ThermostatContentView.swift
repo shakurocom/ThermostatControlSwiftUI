@@ -12,9 +12,11 @@ struct ThermostatContentView: View {
     @State private var isEnabled = true
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
+    
+    @State private var rotation: CGFloat = 0
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
 
                 VStack(alignment: .leading) {
@@ -36,22 +38,21 @@ struct ThermostatContentView: View {
                         .background(Color.black)
                 }
                 .frame(width: 164)
-                .frame(minWidth: 164, maxHeight: .infinity)
+                .frame(maxHeight: .infinity)
                 .background(Color.black)
 
-                GeometryReader { _ in
-                    Image(ImageResource(name: "drum", bundle: .main))
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .mask {
-                            Image(ImageResource(name: "drumMask", bundle: .main))
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black)
-
+                Image("drum")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .mask {
+                        Image("drumMask")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .rotationEffect(.degrees(-rotation))
+                    }
+                    .rotationEffect(.degrees(rotation))
+                    .frame(minWidth: 0, alignment: .leading)
+                    .background(Color.black)
             }
 
             Spacer(minLength: 72)
@@ -60,7 +61,6 @@ struct ThermostatContentView: View {
         }
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .containerRelativeFrame([.horizontal, .vertical])
-        .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .background(.black)
     }
 
@@ -79,6 +79,10 @@ private extension ThermostatContentView {
                     Button("Living Room") {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             roomName = "Living Room"
+                        }
+                        // TODO: - test
+                        withAnimation(.easeInOut(duration: 3.3)) {
+                            rotation += 45
                         }
                     }
                     Button("Living Room 2") {
