@@ -17,7 +17,7 @@ struct ThermostatContentView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     Spacer().frame(height: 30)
 
                     // Controls
@@ -36,7 +36,6 @@ struct ThermostatContentView: View {
                         .background(Color.black)
                 }
                 .frame(width: 164)
-                .frame(maxHeight: .infinity)
                 .background(Color.black)
 
                 DrumView()
