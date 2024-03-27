@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DrumView: View {
 
-    @StateObject private var circleDrag = CircleDragGesture(touchAreaSize: .zero)
+    @StateObject private var rotationGestureRecognizer = RotationGestureRecognizer()
     @State private(set) var rotation: Angle = .radians(0)
 
     var body: some View {
@@ -26,7 +26,7 @@ struct DrumView: View {
                    alignment: .leading)
             .background(.blue)
             .border(.green)
-            .gesture(circleDragGesture(touchAreaSize: size))
+            .gesture(rotationGesture(touchAreaSize: size))
         })
         .background(.yellow)
         .clipped()
@@ -36,10 +36,9 @@ struct DrumView: View {
 
 private extension DrumView {
 
-    private func circleDragGesture(touchAreaSize: CGSize) -> AnyGesture<CircleDragGesture.Value> {
-        circleDrag.touchAreaSize = touchAreaSize
-        debugPrint("dddd")
-        let gesture = circleDrag
+    private func rotationGesture(touchAreaSize: CGSize) -> AnyGesture<RotationGestureRecognizer.Value> {
+        let gesture = rotationGestureRecognizer
+            .gesture(touchAreaSize: touchAreaSize)
             .onChanged({ value in
                 switch value.state {
                 case .inactive, .started:
@@ -51,7 +50,7 @@ private extension DrumView {
             .onEnded({ value in
                 //print("x ended: \(value)")
             })
-        return AnyGesture<CircleDragGesture.Value>(gesture)
+        return AnyGesture<RotationGestureRecognizer.Value>(gesture)
     }
 
     @ViewBuilder private func makeDrumImage(size: CGSize, rotationAngle: Angle) -> some View {

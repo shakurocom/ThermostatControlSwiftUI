@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class CircleDragGesture: Gesture, ObservableObject {
+final class RotationGestureRecognizer: ObservableObject {
 
     struct Value: Equatable {
         
@@ -17,8 +17,8 @@ final class CircleDragGesture: Gesture, ObservableObject {
                                 angularVelocity: 0,
                                 clockwise: true,
                                 touchAreaSize: .zero)
-        
-        let state: CircleDragGesture.State
+
+        let state: RotationGestureRecognizer.State
         let angle: Angle
         let previousAngle: Angle
         let angleOffset: Angle
@@ -26,8 +26,8 @@ final class CircleDragGesture: Gesture, ObservableObject {
         let clockwise: Bool
 
         let touchAreaSize: CGSize
-        
-        init(state: CircleDragGesture.State,
+
+        init(state: RotationGestureRecognizer.State,
              angleRadians: CGFloat,
              previousAngleRadians: CGFloat,
              angularVelocity: CGFloat,
@@ -42,7 +42,7 @@ final class CircleDragGesture: Gesture, ObservableObject {
             self.clockwise = clockwise
             self.touchAreaSize = touchAreaSize
         }
-        
+
     }
 
     enum State {
@@ -51,20 +51,17 @@ final class CircleDragGesture: Gesture, ObservableObject {
         case changed
     }
 
-    var touchAreaSize: CGSize
-
     private(set) var state: State = .inactive
 
     private var dragGesture: AnyGesture<Value>!
-
     private var previousAngle: CGFloat = 0
+    private var touchAreaSize: CGSize = .zero
 
-    init(touchAreaSize: CGSize) {
-        self.touchAreaSize = touchAreaSize
+    init() {
         self.dragGesture = AnyGesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
                 .onChanged({ [weak self] _ in
-                    self?.updateToNextState()
+                    self?.state.next()
                 })
                 .onEnded({ [weak self] _ in
                     self?.state = .inactive
@@ -78,7 +75,8 @@ final class CircleDragGesture: Gesture, ObservableObject {
         )
     }
 
-    public var body: AnyGesture<Value> {
+    func gesture(touchAreaSize: CGSize) -> AnyGesture<Value> {
+        self.touchAreaSize = touchAreaSize
         return dragGesture
     }
 
@@ -86,19 +84,34 @@ final class CircleDragGesture: Gesture, ObservableObject {
 
 // MARK: - Private
 
-private extension CircleDragGesture {
+private extension RotationGestureRecognizer.State {
+
+    mutating func next() {
+        switch self {
+        case .inactive:
+            self = .started
+        case .started:
+            self = .changed
+        case .changed:
+            break
+        }
+    }
+
+}
+
+private extension RotationGestureRecognizer {
 
     func centerBasedTouchLocation(value: DragGesture.Value, areaSize: CGSize) -> CGPoint {
         return CGPoint(x: value.location.x - areaSize.width * 0.5, y: areaSize.height * 0.5 - value.location.y)
     }
 
-    func angleBetweenXAsisForPoint(point: CGPoint) -> CGFloat {
+    func angleBetweenXAxisForPoint(point: CGPoint) -> CGFloat {
         return atan2(point.y, point.x)
     }
 
-    func mapValue(value: DragGesture.Value) -> CircleDragGesture.Value {
+    func mapValue(value: DragGesture.Value) -> RotationGestureRecognizer.Value {
         let touchLocation = centerBasedTouchLocation(value: value, areaSize: touchAreaSize)
-        let angle = angleBetweenXAsisForPoint(point: touchLocation)
+        let angle = angleBetweenXAxisForPoint(point: touchLocation)
         let velocity = value.velocity
         let magnitude = sqrt((velocity.width * velocity.width) + (velocity.height * velocity.height)) // The Pythagorean Theorem
         let radius = touchLocation.distance(to: .zero)
@@ -106,7 +119,7 @@ private extension CircleDragGesture {
         if state != .changed {
             previousAngle = angle
         }
-        debugPrint(angularVelocity)
+
         let newValue = Value(state: state,
                              angleRadians: angle,
                              previousAngleRadians: previousAngle,
@@ -115,17 +128,6 @@ private extension CircleDragGesture {
                              touchAreaSize: touchAreaSize)
         previousAngle = angle
         return newValue
-    }
-
-    func updateToNextState() {
-        switch state {
-        case .inactive:
-            state = .started
-        case .started:
-            state = .changed
-        case .changed:
-            break
-        }
     }
 
 }

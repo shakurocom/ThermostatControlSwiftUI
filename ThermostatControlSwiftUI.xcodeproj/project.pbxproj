@@ -15,7 +15,7 @@
 		F55C007A2BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F55C00782BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf */; };
 		F56A807B2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */; };
 		F56A807D2BAD61640057532F /* FanSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56A807C2BAD61640057532F /* FanSlider.swift */; };
-		F5708EAB2BB2D9BE0052644E /* CircleDragGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5708EAA2BB2D9BE0052644E /* CircleDragGesture.swift */; };
+		F5708EAB2BB2D9BE0052644E /* RotationGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5708EAA2BB2D9BE0052644E /* RotationGestureRecognizer.swift */; };
 		F571BD052B99C05D007E730F /* GlowingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F571BD042B99C05D007E730F /* GlowingButton.swift */; };
 		F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */; };
 		F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405442B98F78E00494384 /* CGPoint+Distance.swift */; };
@@ -38,7 +38,7 @@
 		F55C00782BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Medium.otf"; sourceTree = "<group>"; };
 		F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Semibold.otf"; sourceTree = "<group>"; };
 		F56A807C2BAD61640057532F /* FanSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FanSlider.swift; sourceTree = "<group>"; };
-		F5708EAA2BB2D9BE0052644E /* CircleDragGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleDragGesture.swift; sourceTree = "<group>"; };
+		F5708EAA2BB2D9BE0052644E /* RotationGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationGestureRecognizer.swift; sourceTree = "<group>"; };
 		F571BD042B99C05D007E730F /* GlowingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlowingButton.swift; sourceTree = "<group>"; };
 		F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+RoundToNearest.swift"; sourceTree = "<group>"; };
 		F57405442B98F78E00494384 /* CGPoint+Distance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Distance.swift"; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				F5007B452BA996FF00940F6C /* Info.plist */,
-				F5708EAA2BB2D9BE0052644E /* CircleDragGesture.swift */,
+				F5708EAA2BB2D9BE0052644E /* RotationGestureRecognizer.swift */,
 				F554943D2BADB6E400E43FEE /* DrumView.swift */,
 				F56A807C2BAD61640057532F /* FanSlider.swift */,
 				F571BD042B99C05D007E730F /* GlowingButton.swift */,
@@ -292,7 +292,7 @@
 				F5007B422BA98F9100940F6C /* Stylesheet.swift in Sources */,
 				F5DBFAD32B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift in Sources */,
 				F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */,
-				F5708EAB2BB2D9BE0052644E /* CircleDragGesture.swift in Sources */,
+				F5708EAB2BB2D9BE0052644E /* RotationGestureRecognizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
