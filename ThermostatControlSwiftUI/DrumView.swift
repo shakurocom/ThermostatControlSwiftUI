@@ -27,6 +27,8 @@ private final class DrumViewModel: ObservableObject {
         deceleration.decelerationFactor = Constant.decelerationFactor
         return deceleration
     }()
+    
+    private var feedbackGenerator: UISelectionFeedbackGenerator?
 
     deinit {
         decelerationBehaviour.stop()
@@ -43,9 +45,10 @@ private final class DrumViewModel: ObservableObject {
         }
         decelerationBehaviour.decelerate(velocity: velocity,
                                          onUpdate: { [weak self] value in
-            self?.rotation += Angle.radians(clockwise ? value : -value)
-        }, onComplete: {
-
+            let offset = Angle.radians(clockwise ? value : -value)
+            self?.update(offset: offset)
+        }, onComplete: { [weak self] in
+            self?.feedbackGenerator = nil
         })
         /* decelerationBehaviour.decelerate(velocity: velocity,
          update: { [weak self] (distance) in self?.update(by: distance, clockwise: clockwise) },
@@ -66,10 +69,14 @@ private final class DrumViewModel: ObservableObject {
                     return
                 }
                 switch value.state {
-                case .inactive, .started:
-                    return
+                case .inactive:
+                    break
+                case .started:
+                    actualSelf.stopDeceleration()
+                    actualSelf.feedbackGenerator = UISelectionFeedbackGenerator()
+                    actualSelf.feedbackGenerator?.prepare()
                 case .changed:
-                    actualSelf.rotation += value.angleOffset
+                    actualSelf.update(offset: value.angleOffset)
                 }
             })
             .onEnded({ [weak self] value in
@@ -77,10 +84,33 @@ private final class DrumViewModel: ObservableObject {
                     return
                 }
                 if !actualSelf.decelerate(value.angularVelocity, clockwise: value.clockwise) {
-                    //feedbackGenerator = nil
+                    actualSelf.feedbackGenerator = nil
                 }
             })
         return AnyGesture<RotationGestureRecognizer.Value>(gesture)
+    }
+
+    private func update(offset: Angle) {
+        rotation += offset
+        feedbackGenerator?.selectionChanged()
+        feedbackGenerator?.prepare()
+        /*let valueOffset = angle * angleToValueFactor
+        let oldValue = value.transformed
+        if clockwise {
+            totalAngle += angle
+            //spinnerImageView.rotate(by: angle)
+            setValue(value.raw + valueOffset)
+        } else {
+            totalAngle -= angle
+            //spinnerImageView.rotate(by: -angle)
+            setValue(value.raw - valueOffset)
+        }
+        spinnerImageView.transform = CGAffineTransform(rotationAngle: totalAngle)
+        if abs(oldValue - value.transformed) > CGFloat.ulpOfOne {
+            valueChanged?(self)
+            feedbackGenerator?.selectionChanged()
+            feedbackGenerator?.prepare()
+        }*/
     }
 }
 
