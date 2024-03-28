@@ -12,6 +12,9 @@ struct ThermostatContentView: View {
     @State private var isEnabled = true
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
+    @State private var currentValue = MeasurementValue(raw: 70, transformed: 70, string: "70")
+
+    @State private var valueTransformer = DefaultMeasurementValueTransformer.fahrenheitValueTransformer()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -38,7 +41,10 @@ struct ThermostatContentView: View {
                 .frame(width: 164)
                 .background(Color.black)
 
-                DrumView()
+                DrumView(value: $currentValue,
+                         maxUnitValue: 99,
+                         minUnitValue: 45,
+                         valueTransformer: valueTransformer)
 
             }
 
@@ -115,7 +121,7 @@ private extension ThermostatContentView {
                 .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
                 .foregroundColor(.white.opacity(0.5))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Text("68")
+            Text(currentValue.string)
                 .lineLimit(0)
                 .font(Stylesheet.FontFace.SFProRoundedBold.font(104))
                 .minimumScaleFactor(0.8)

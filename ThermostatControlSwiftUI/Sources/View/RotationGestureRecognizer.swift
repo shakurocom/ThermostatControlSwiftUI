@@ -11,12 +11,14 @@ final class RotationGestureRecognizer {
 
     struct Value: Equatable {
 
-        static let zero = Value(state: .inactive,
-                                angleRadians: 0,
-                                previousAngleRadians: 0,
-                                angularVelocity: 0,
-                                clockwise: true,
-                                touchAreaSize: .zero)
+        static var zero: Value {
+            Value(state: .inactive,
+                  angleRadians: 0,
+                  previousAngleRadians: 0,
+                  angularVelocity: 0,
+                  clockwise: true,
+                  touchAreaSize: .zero)
+        }
 
         let state: RotationGestureRecognizer.State
         let angle: Angle

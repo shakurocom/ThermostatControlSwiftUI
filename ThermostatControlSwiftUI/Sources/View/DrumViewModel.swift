@@ -1,20 +1,29 @@
 //
-//  DrumView.swift
+//  DrumViewModel.swift
 //  ThermostatControlSwiftUI
 //
-//  Created by Vlad on 3/22/24.
+//  Created by Vlad on 3/28/24.
 //
 
 import SwiftUI
 
-private final class DrumViewModel: ObservableObject {
+final class DrumViewModel: ObservableObject {
 
     private enum Constant {
-        public static let minimumDecelerationVelocity: CGFloat = (.pi / 180) * 4
-        public static let decelerationFactor: CGFloat = 0.92
+        static let minimumDecelerationVelocity: CGFloat = (.pi / 180) * 4
+        static let decelerationFactor: CGFloat = 0.92
+        static let maxValue: CGFloat = 1
+        static let minValue: CGFloat = 0
+        static let fullСycleAngle: CGFloat = .pi
     }
 
+    @Binding private(set) var value: MeasurementValue
     @Published private(set) var rotation: Angle = .radians(0)
+
+    private(set) var maxValue: CGFloat = Constant.maxValue
+    private(set) var minValue: CGFloat = Constant.minValue
+    private(set) var angleToValueFactor: CGFloat = (Constant.maxValue - Constant.minValue) / Constant.fullСycleAngle
+    private(set) var valueTransformer: MeasurementValueTransformer = DefaultMeasurementValueTransformer.fahrenheitValueTransformer()
 
     private let rotationGestureRecognizer = RotationGestureRecognizer()
     private lazy var rotationGesture: AnyGesture<RotationGestureRecognizer.Value> = {
@@ -27,11 +36,38 @@ private final class DrumViewModel: ObservableObject {
         deceleration.decelerationFactor = Constant.decelerationFactor
         return deceleration
     }()
-    
+
     private var feedbackGenerator: UISelectionFeedbackGenerator?
+
+    /// - Parameters:
+    ///  - value: Value binding
+    ///  - valueTransformer: Actual value tranformer
+    ///  - maxValue: Max value
+    ///  - minValue: Min value
+    ///  - fullСycleAngle: Angle from which changes are counted. Default - .pi
+    init(value: Binding<MeasurementValue>,
+         valueTransformer: MeasurementValueTransformer,
+         maxValue: CGFloat,
+         minValue: CGFloat) {
+        _value = value
+        self.valueTransformer = valueTransformer
+        self.maxValue = maxValue
+        self.minValue = minValue
+        angleToValueFactor = (maxValue - minValue) / Constant.fullСycleAngle
+        setValue(value.wrappedValue.raw)
+    }
 
     deinit {
         decelerationBehaviour.stop()
+    }
+
+    /// Sets a value in the range from minimum to maximum
+    /// - parameter newValue:
+    public func setValue(_ newValue: CGFloat) {
+        let newValue = valueTransformer.transformed(rawValue: min(max(newValue, minValue), maxValue))
+        if value != newValue {
+            value = newValue
+        }
     }
 
     func stopDeceleration() {
@@ -50,9 +86,6 @@ private final class DrumViewModel: ObservableObject {
         }, onComplete: { [weak self] in
             self?.feedbackGenerator = nil
         })
-        /* decelerationBehaviour.decelerate(velocity: velocity,
-         update: { [weak self] (distance) in self?.update(by: distance, clockwise: clockwise) },
-         completion: { [weak self] in self?.feedbackGenerator = nil })*/
         return true
     }
 
@@ -91,87 +124,14 @@ private final class DrumViewModel: ObservableObject {
     }
 
     private func update(offset: Angle) {
-        rotation += offset
-        feedbackGenerator?.selectionChanged()
-        feedbackGenerator?.prepare()
-        /*let valueOffset = angle * angleToValueFactor
+        let radians = offset.radians
+        let valueOffset = radians * angleToValueFactor
         let oldValue = value.transformed
-        if clockwise {
-            totalAngle += angle
-            //spinnerImageView.rotate(by: angle)
-            setValue(value.raw + valueOffset)
-        } else {
-            totalAngle -= angle
-            //spinnerImageView.rotate(by: -angle)
-            setValue(value.raw - valueOffset)
-        }
-        spinnerImageView.transform = CGAffineTransform(rotationAngle: totalAngle)
+        rotation += offset
+        setValue(value.raw + valueOffset)
         if abs(oldValue - value.transformed) > CGFloat.ulpOfOne {
-            valueChanged?(self)
             feedbackGenerator?.selectionChanged()
             feedbackGenerator?.prepare()
-        }*/
+        }
     }
-}
-
-public struct DrumView: View {
-
-    public enum Constant {
-        public static let maxValue: CGFloat = 1
-        public static let minValue: CGFloat = 0
-        public static let fullСycleAngle: CGFloat = .pi
-
-    }
-
-    @StateObject private var model = DrumViewModel()
-
-    public var body: some View {
-        // Main geometry container
-        GeometryReader(content: { geometry in
-
-            // Gesture view
-            let size = CGSize(width: geometry.size.height, height: geometry.size.height)
-            ZStack(content: {
-                makeDrumImage(size: size, rotationAngle: model.rotation)
-            })
-            .frame(width: size.height,
-                   height: size.height,
-                   alignment: .leading)
-            .background(.blue)
-            .border(.green)
-            .gesture(model.rotationGesture(touchAreaSize: size))
-        })
-        .background(.yellow)
-        .clipped()
-        .onDisappear(perform: {
-            model.stopDeceleration()
-        })
-    }
-
-}
-
-private extension DrumView {
-
-    @ViewBuilder private func makeDrumImage(size: CGSize, rotationAngle: Angle) -> some View {
-        Image("drum")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .mask {
-                Image("drumMask")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .rotationEffect(-rotationAngle, anchor: .center)
-            }
-            .frame(width: size.height,
-                   height: size.height,
-                   alignment: .leading)
-            .background(.red)
-            .clipped()
-            .rotationEffect(rotationAngle, anchor: .center)
-    }
-
-}
-
-#Preview {
-    DrumView().background(.black)
 }
