@@ -124,10 +124,10 @@
 			isa = PBXGroup;
 			children = (
 				F5007B452BA996FF00940F6C /* Info.plist */,
-				F5708EAA2BB2D9BE0052644E /* RotationGestureRecognizer.swift */,
 				F554943D2BADB6E400E43FEE /* DrumView.swift */,
 				F56A807C2BAD61640057532F /* FanSlider.swift */,
 				F571BD042B99C05D007E730F /* GlowingButton.swift */,
+				F5708EAA2BB2D9BE0052644E /* RotationGestureRecognizer.swift */,
 				F5007B412BA98F9100940F6C /* Stylesheet.swift */,
 				F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */,
 				F5DBFAD22B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift */,

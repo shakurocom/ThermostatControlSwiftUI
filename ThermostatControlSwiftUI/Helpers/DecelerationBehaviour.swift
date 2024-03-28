@@ -17,8 +17,8 @@ public final class DecelerationBehaviour {
     private var timer: CADisplayLink?
     private var currentVelocity: CGFloat = 0
 
-    private var completion: (() -> Void)?
-    private var update: ((_ distance: CGFloat) -> Void)?
+    private var onComplete: (() -> Void)?
+    private var onUpdate: ((_ distance: CGFloat) -> Void)?
 
     ///  Used to slow down animation
     /// - Parameters:
@@ -26,22 +26,22 @@ public final class DecelerationBehaviour {
     ///  - distance: Block to be called for decelaration distance.
     ///  - completion: Block to be called  when minVelocity > velocity.
     public func decelerate(velocity: CGFloat,
-                           update: ((_ distance: CGFloat) -> Void)?,
-                           completion: (() -> Void)? = nil) {
+                           onUpdate: ((_ distance: CGFloat) -> Void)?,
+                           onComplete: (() -> Void)? = nil) {
         stop()
         currentVelocity = velocity
-        self.completion = completion
-        self.update = update
+        self.onComplete = onComplete
+        self.onUpdate = onUpdate
         startTimer()
     }
 
     /// Used to stop animation.
     public func stop() {
-        update = nil
+        onUpdate = nil
         stopTimer()
         currentVelocity = 0
-        completion?()
-        completion = nil
+        onComplete?()
+        onComplete = nil
     }
 
     // MARK: - Private
@@ -65,7 +65,7 @@ public final class DecelerationBehaviour {
             return
         }
         let distance = currentVelocity * CGFloat(sender.duration)
-        update?(distance)
+        onUpdate?(distance)
     }
 
 }

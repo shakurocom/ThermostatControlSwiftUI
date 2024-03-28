@@ -7,51 +7,120 @@
 
 import SwiftUI
 
-struct DrumView: View {
+private final class DrumViewModel: ObservableObject {
 
-    @StateObject private var rotationGestureRecognizer = RotationGestureRecognizer()
-    @State private(set) var rotation: Angle = .radians(0)
+    private enum Constant {
+        public static let minimumDecelerationVelocity: CGFloat = (.pi / 180) * 4
+        public static let decelerationFactor: CGFloat = 0.92
+    }
 
-    var body: some View {
+    @Published private(set) var rotation: Angle = .radians(0)
+
+    private let rotationGestureRecognizer = RotationGestureRecognizer()
+    private lazy var rotationGesture: AnyGesture<RotationGestureRecognizer.Value> = {
+        return makeRotationGesture()
+    }()
+
+    private var decelerationBehaviour: DecelerationBehaviour = {
+        let deceleration = DecelerationBehaviour()
+        deceleration.minVelocity = Constant.minimumDecelerationVelocity
+        deceleration.decelerationFactor = Constant.decelerationFactor
+        return deceleration
+    }()
+
+    deinit {
+        decelerationBehaviour.stop()
+    }
+
+    func stopDeceleration() {
+        decelerationBehaviour.stop()
+    }
+
+    func decelerate(_ velocity: CGFloat, clockwise: Bool) -> Bool {
+        decelerationBehaviour.stop()
+        guard velocity >= Constant.minimumDecelerationVelocity else {
+            return false
+        }
+        decelerationBehaviour.decelerate(velocity: velocity,
+                                         onUpdate: { [weak self] value in
+            self?.rotation += Angle.radians(clockwise ? value : -value)
+        }, onComplete: {
+
+        })
+        /* decelerationBehaviour.decelerate(velocity: velocity,
+         update: { [weak self] (distance) in self?.update(by: distance, clockwise: clockwise) },
+         completion: { [weak self] in self?.feedbackGenerator = nil })*/
+        return true
+    }
+
+    func rotationGesture(touchAreaSize: CGSize) -> AnyGesture<RotationGestureRecognizer.Value> {
+        rotationGestureRecognizer.touchAreaSize = touchAreaSize
+        return rotationGesture
+    }
+
+    private func makeRotationGesture() -> AnyGesture<RotationGestureRecognizer.Value> {
+        let gesture = rotationGestureRecognizer
+            .gesture()
+            .onChanged({ [weak self] value in
+                guard let actualSelf = self else {
+                    return
+                }
+                switch value.state {
+                case .inactive, .started:
+                    return
+                case .changed:
+                    actualSelf.rotation += value.angleOffset
+                }
+            })
+            .onEnded({ [weak self] value in
+                guard let actualSelf = self else {
+                    return
+                }
+                if !actualSelf.decelerate(value.angularVelocity, clockwise: value.clockwise) {
+                    //feedbackGenerator = nil
+                }
+            })
+        return AnyGesture<RotationGestureRecognizer.Value>(gesture)
+    }
+}
+
+public struct DrumView: View {
+
+    public enum Constant {
+        public static let maxValue: CGFloat = 1
+        public static let minValue: CGFloat = 0
+        public static let fullСycleAngle: CGFloat = .pi
+
+    }
+
+    @StateObject private var model = DrumViewModel()
+
+    public var body: some View {
         // Main geometry container
         GeometryReader(content: { geometry in
 
             // Gesture view
             let size = CGSize(width: geometry.size.height, height: geometry.size.height)
             ZStack(content: {
-                makeDrumImage(size: size, rotationAngle: rotation)
+                makeDrumImage(size: size, rotationAngle: model.rotation)
             })
             .frame(width: size.height,
                    height: size.height,
                    alignment: .leading)
             .background(.blue)
             .border(.green)
-            .gesture(rotationGesture(touchAreaSize: size))
+            .gesture(model.rotationGesture(touchAreaSize: size))
         })
         .background(.yellow)
         .clipped()
+        .onDisappear(perform: {
+            model.stopDeceleration()
+        })
     }
 
 }
 
 private extension DrumView {
-
-    private func rotationGesture(touchAreaSize: CGSize) -> AnyGesture<RotationGestureRecognizer.Value> {
-        let gesture = rotationGestureRecognizer
-            .gesture(touchAreaSize: touchAreaSize)
-            .onChanged({ value in
-                switch value.state {
-                case .inactive, .started:
-                    return
-                case .changed:
-                    rotation += value.angleOffset
-                }
-            })
-            .onEnded({ value in
-                //print("x ended: \(value)")
-            })
-        return AnyGesture<RotationGestureRecognizer.Value>(gesture)
-    }
 
     @ViewBuilder private func makeDrumImage(size: CGSize, rotationAngle: Angle) -> some View {
         Image("drum")
@@ -76,7 +145,3 @@ private extension DrumView {
 #Preview {
     DrumView().background(.black)
 }
-
-/*
- 
- */

@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-final class RotationGestureRecognizer: ObservableObject {
+final class RotationGestureRecognizer {
 
     struct Value: Equatable {
-        
+
         static let zero = Value(state: .inactive,
                                 angleRadians: 0,
                                 previousAngleRadians: 0,
@@ -50,12 +50,13 @@ final class RotationGestureRecognizer: ObservableObject {
         case started
         case changed
     }
+    
+    var touchAreaSize: CGSize = .zero
 
     private(set) var state: State = .inactive
 
     private var dragGesture: AnyGesture<Value>!
     private var previousAngle: CGFloat = 0
-    private var touchAreaSize: CGSize = .zero
 
     init() {
         self.dragGesture = AnyGesture(
@@ -73,6 +74,10 @@ final class RotationGestureRecognizer: ObservableObject {
                     return actualSelf.mapValue(value: value)
                 })
         )
+    }
+
+    func gesture() -> AnyGesture<Value> {
+        return dragGesture
     }
 
     func gesture(touchAreaSize: CGSize) -> AnyGesture<Value> {
