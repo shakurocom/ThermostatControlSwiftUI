@@ -58,7 +58,7 @@ struct ThermostatContentView: View {
 
             Spacer(minLength: 72)
 
-            FanSlider(value: $fanSpeed)
+            FanSlider(isEnabled: $isEnabled, value: $fanSpeed)
         }
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .containerRelativeFrame([.horizontal, .vertical])

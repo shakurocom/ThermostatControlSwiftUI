@@ -34,12 +34,16 @@ struct GlowingButton: View {
         return state.contains([.selected, .enabled]) ? selectedColor : .white
     }
 
-    private var contentOpacity: CGFloat {
-        return state.contains([.selected, .enabled]) ? 1.0 : 0.2
-    }
-
     private var shadowRadius: CGFloat {
         return state.contains([.selected, .enabled]) ? 16 : 0
+    }
+    
+    private var contentOpacity: CGFloat {
+        if state.contains(.enabled) {
+            return state.contains(.selected) ? 1.0 : 0.4
+        } else {
+            return 0.2
+        }
     }
 
     var body: some View {
@@ -71,7 +75,7 @@ private extension GlowingButton {
 
     @ViewBuilder private func makeBody() -> some View {
         ZStack {
-            makeContent().opacity(state.contains([.selected, .enabled]) ? 1.0 : 0.2)
+            makeContent().opacity(contentOpacity)
             makeSelectionIndicator()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

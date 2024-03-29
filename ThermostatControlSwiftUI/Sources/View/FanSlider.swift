@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FanSlider: View {
 
+    @Binding private(set) var isEnabled: Bool
     @Binding private(set) var value: CGFloat
 
     @State private var leftFunRotation: CGFloat = 0
@@ -31,18 +32,19 @@ struct FanSlider: View {
                     }
                 }
             })
-            .tint(Stylesheet.Color.coldMode)
+            .tint(isEnabled ? Stylesheet.Color.coldMode : .white.opacity(0.5))
             Text("􁁌")
                 .font(Stylesheet.FontFace.SFProRoundedSemiBold.font(16))
                 .foregroundColor(.white.opacity(0.5))
                 .rotationEffect(.degrees(rightFunRotation))
         })
+        .opacity(isEnabled ? 1.0 : 0.2)
         .padding(16)
         .frame(maxWidth: .infinity)
         .frame(height: 80)
         .background(.white.opacity(0.08))
         .cornerRadius(12)
-
+        .disabled(!isEnabled)
         .onChange(of: value) { oldValue, newValue in
            onSliderValueChange(oldValue: oldValue, newValue: newValue)
         }
@@ -89,11 +91,14 @@ private extension FanSlider {
 
 #Preview {
     struct Preview: View {
+
+        @State private var isEnabled: Bool = false
         @State private var value: CGFloat = 0
 
         var body: some View {
-            ZStack {
-                FanSlider(value: $value)
+            VStack {
+                Toggle("On/Of", isOn: $isEnabled)
+                FanSlider(isEnabled: $isEnabled, value: $value)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.black)
