@@ -22,7 +22,9 @@ struct GlowingButton: View {
     let cornerRadius: CGFloat
     let animateImageOnSelectionChanged: Bool
 
-    @State private var state: ControlState = [.enabled]
+    @Binding private(set) var state: ControlState
+
+    let action: () -> Void
 
     private var currentBGColor: Color {
         return state.contains([.selected, .enabled]) ? selectedColor.opacity(0.14) : .white.opacity(0.08)
@@ -50,11 +52,13 @@ struct GlowingButton: View {
             } else {
                 state.insert(.selected)
             }
+            action()
         }, label: {
             makeBody()
         })
         .background(currentBGColor)
         .cornerRadius(cornerRadius)
+        .disabled(!state.contains(.enabled))
     }
 
 }
@@ -113,7 +117,7 @@ private extension GlowingButton {
         HStack(content: {
             Spacer(minLength: 20)
             Color(selectedColor)
-                .frame(maxWidth: state.contains([.selected]) ? .infinity : 0)
+                .frame(maxWidth: state.contains([.selected, .enabled]) ? .infinity : 0)
                 .frame(height: 3)
                 .clipShape(
                     .rect(
@@ -132,18 +136,32 @@ private extension GlowingButton {
 }
 
 #Preview {
-    VStack(alignment: .center, content: {
-        GlowingButton(image: Image(systemName: "snowflake"),
-                      title: "Auto",
-                      selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
-                      cornerRadius: 16,
-                      animateImageOnSelectionChanged: true).frame(width: 164, height: 80)
-        GlowingButton(image: Image(systemName: "snowflake"),
-                      title: nil,
-                      selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
-                      cornerRadius: 16,
-                      animateImageOnSelectionChanged: false).frame(width: 80, height: 80)
-    })
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(.black)
+
+    struct Preview: View {
+
+        @State var button1: GlowingButton.ControlState = [.enabled, .selected]
+        @State var button2: GlowingButton.ControlState = .enabled
+
+        var body: some View {
+            VStack(alignment: .center, content: {
+                GlowingButton(image: Image(systemName: "snowflake"),
+                              title: "Auto",
+                              selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
+                              cornerRadius: 16,
+                              animateImageOnSelectionChanged: true,
+                              state: $button1, action: {}).frame(width: 164, height: 80)
+                GlowingButton(image: Image(systemName: "snowflake"),
+                              title: nil,
+                              selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
+                              cornerRadius: 16,
+                              animateImageOnSelectionChanged: false,
+                              state: $button2, action: {}).frame(width: 80, height: 80)
+            })
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(.black)
+        }
+    }
+
+    return Preview()
+
 }

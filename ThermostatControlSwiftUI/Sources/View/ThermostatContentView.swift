@@ -7,13 +7,24 @@
 
 import SwiftUI
 
+enum ThermostatMode {
+    case auto
+    case cooling
+    case heating
+}
+
 struct ThermostatContentView: View {
 
-    @State private var isEnabled = true
+    @State private var mode: ThermostatMode = .auto
+    @State private var isEnabled = false
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
     @State private var currentValue = MeasurementValueFormatter.Value(raw: 70, formatted: 70, string: "70")
     @State private var drumViewConfiguration = DrumViewModel.Configuration(maxValue: 99, minValue: 45, valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter())
+
+    @State private var autoModeButtonState: GlowingButton.ControlState = [.selected]
+    @State private var heatingModeButtonState: GlowingButton.ControlState = []
+    @State private var coolingModeButtonState: GlowingButton.ControlState = []
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -52,6 +63,7 @@ struct ThermostatContentView: View {
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .containerRelativeFrame([.horizontal, .vertical])
         .background(.black)
+        .onChange(of: mode, initial: true, onModeChanged)
     }
 
 }
@@ -104,6 +116,17 @@ private extension ThermostatContentView {
                 Toggle("On/Of", isOn: $isEnabled)
                     .labelsHidden()
                     .tint(Stylesheet.Color.coldMode)
+                    .onChange(of: isEnabled) { _, _ in
+                        if isEnabled {
+                            autoModeButtonState.insert(.enabled)
+                            heatingModeButtonState.insert(.enabled)
+                            coolingModeButtonState.insert(.enabled)
+                        } else {
+                            autoModeButtonState.remove(.enabled)
+                            heatingModeButtonState.remove(.enabled)
+                            coolingModeButtonState.remove(.enabled)
+                        }
+                    }
             })
             .padding(.horizontal, 20)
             .frame(height: 64)
@@ -139,7 +162,11 @@ private extension ThermostatContentView {
                           title: "Auto",
                           selectedColor: Stylesheet.Color.autoMode,
                           cornerRadius: 16,
-                          animateImageOnSelectionChanged: false)
+                          animateImageOnSelectionChanged: false,
+                          state: $autoModeButtonState,
+                          action: {
+                mode = .auto
+            })
             .frame(width: 164, height: 80)
             .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
             HStack(spacing: 4) {
@@ -147,16 +174,47 @@ private extension ThermostatContentView {
                               title: nil,
                               selectedColor: Stylesheet.Color.coldMode,
                               cornerRadius: 16,
-                              animateImageOnSelectionChanged: true)
+                              animateImageOnSelectionChanged: true,
+                              state: $coolingModeButtonState,
+                              action: {
+                    mode = .cooling
+                })
                 .frame(width: 80, height: 80)
                 GlowingButton(image: Image(systemName: "sun.max"),
                               title: nil,
                               selectedColor: Stylesheet.Color.hotMode,
                               cornerRadius: 16,
-                              animateImageOnSelectionChanged: true)
+                              animateImageOnSelectionChanged: true,
+                              state: $heatingModeButtonState,
+                              action: {
+                    mode = .heating
+                })
                 .frame(width: 80, height: 80)
             }
         })
+    }
+
+}
+
+// MARK: Helpers
+
+private extension ThermostatContentView {
+
+    func onModeChanged(_ oldValue: ThermostatMode, _ newValue: ThermostatMode) {
+        switch newValue {
+        case .auto:
+            autoModeButtonState.insert(.selected)
+            heatingModeButtonState.remove(.selected)
+            coolingModeButtonState.remove(.selected)
+        case .cooling:
+            autoModeButtonState.remove(.selected)
+            heatingModeButtonState.remove(.selected)
+            coolingModeButtonState.insert(.selected)
+        case .heating:
+            autoModeButtonState.remove(.selected)
+            heatingModeButtonState.insert(.selected)
+            coolingModeButtonState.remove(.selected)
+        }
     }
 
 }
