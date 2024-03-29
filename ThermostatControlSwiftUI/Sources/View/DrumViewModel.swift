@@ -9,6 +9,12 @@ import SwiftUI
 
 final class DrumViewModel: ObservableObject {
 
+    struct Configuration: Equatable {
+        let maxValue: CGFloat
+        let minValue: CGFloat
+        let valueFormatter: MeasurementValueFormatter
+    }
+
     private enum Constant {
         static let minimumDecelerationVelocity: CGFloat = (.pi / 180) * 4
         static let decelerationFactor: CGFloat = 0.92
@@ -17,13 +23,14 @@ final class DrumViewModel: ObservableObject {
         static let fullСycleAngle: CGFloat = .pi
     }
 
-    @Binding private(set) var value: MeasurementValue
+    @Binding private(set) var value: MeasurementValueFormatter.Value
     @Published private(set) var rotation: Angle = .radians(0)
 
-    private(set) var maxValue: CGFloat = Constant.maxValue
-    private(set) var minValue: CGFloat = Constant.minValue
+    private(set) var configuration = Configuration(maxValue: Constant.maxValue,
+                                                   minValue: Constant.minValue,
+                                                   valueFormatter: MeasurementValueFormatter())
+
     private(set) var angleToValueFactor: CGFloat = (Constant.maxValue - Constant.minValue) / Constant.fullСycleAngle
-    private(set) var valueTransformer: MeasurementValueTransformer = DefaultMeasurementValueTransformer.fahrenheitValueTransformer()
 
     private let rotationGestureRecognizer = RotationGestureRecognizer()
     private lazy var rotationGesture: AnyGesture<RotationGestureRecognizer.Value> = {
@@ -41,20 +48,11 @@ final class DrumViewModel: ObservableObject {
 
     /// - Parameters:
     ///  - value: Value binding
-    ///  - valueTransformer: Actual value tranformer
-    ///  - maxValue: Max value
-    ///  - minValue: Min value
     ///  - fullСycleAngle: Angle from which changes are counted. Default - .pi
-    init(value: Binding<MeasurementValue>,
-         valueTransformer: MeasurementValueTransformer,
-         maxValue: CGFloat,
-         minValue: CGFloat) {
+    init(value: Binding<MeasurementValueFormatter.Value>,
+         configuration: Configuration) {
         _value = value
-        self.valueTransformer = valueTransformer
-        self.maxValue = maxValue
-        self.minValue = minValue
-        angleToValueFactor = (maxValue - minValue) / Constant.fullСycleAngle
-        setValue(value.wrappedValue.raw)
+        setConfiguration(configuration)
     }
 
     deinit {
@@ -64,10 +62,17 @@ final class DrumViewModel: ObservableObject {
     /// Sets a value in the range from minimum to maximum
     /// - parameter newValue:
     public func setValue(_ newValue: CGFloat) {
-        let newValue = valueTransformer.transformed(rawValue: min(max(newValue, minValue), maxValue))
+        let newValue = configuration.valueFormatter.formatted(rawValue: min(max(newValue, configuration.minValue), configuration.maxValue))
+        debugPrint(newValue)
         if value != newValue {
             value = newValue
         }
+    }
+
+    public func setConfiguration(_ config: Configuration) {
+        configuration = config
+        angleToValueFactor = (config.maxValue - config.minValue) / Constant.fullСycleAngle
+        setValue(value.raw)
     }
 
     func stopDeceleration() {
@@ -126,10 +131,10 @@ final class DrumViewModel: ObservableObject {
     private func update(offset: Angle) {
         let radians = offset.radians
         let valueOffset = radians * angleToValueFactor
-        let oldValue = value.transformed
+        let oldValue = value.formatted
         rotation += offset
         setValue(value.raw + valueOffset)
-        if abs(oldValue - value.transformed) > CGFloat.ulpOfOne {
+        if abs(oldValue - value.formatted) > CGFloat.ulpOfOne {
             feedbackGenerator?.selectionChanged()
             feedbackGenerator?.prepare()
         }

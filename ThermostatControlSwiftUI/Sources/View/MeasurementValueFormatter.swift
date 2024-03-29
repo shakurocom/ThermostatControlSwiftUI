@@ -1,22 +1,18 @@
 import UIKit
 
-public struct MeasurementValue: Equatable {
+struct MeasurementValueFormatter: Equatable {
 
-    static var zero: MeasurementValue {
-        return MeasurementValue(raw: 0, transformed: 0, string: "")
+    public struct Value: Equatable {
+
+        static var zero: Value {
+            return Value(raw: 0, formatted: 0, string: "")
+        }
+
+        let raw: CGFloat
+        let formatted: CGFloat
+        let string: String
+
     }
-
-    let raw: CGFloat
-    let transformed: CGFloat
-    let string: String
-
-}
-
-public protocol MeasurementValueTransformer {
-    func transformed(rawValue: CGFloat) -> MeasurementValue
-}
-
-public class DefaultMeasurementValueTransformer: MeasurementValueTransformer {
 
     let suffix: String
     let prefix: String
@@ -44,12 +40,11 @@ public class DefaultMeasurementValueTransformer: MeasurementValueTransformer {
         self.prefix = prefix
     }
 
-    public func transformed(rawValue: CGFloat) -> MeasurementValue {
+    public func formatted(rawValue: CGFloat) -> Value {
         let rounded = rawValue.roundToNearest(roundingThreshold)
-        return MeasurementValue(raw: rawValue,
-                                transformed: rounded,
-                                string: string(value: rounded))
-        
+        return Value(raw: rawValue,
+                     formatted: rounded,
+                     string: string(value: rounded))
     }
 
     public func string(value: CGFloat) -> String {

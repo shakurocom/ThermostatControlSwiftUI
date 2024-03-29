@@ -52,7 +52,7 @@ final class RotationGestureRecognizer {
         case started
         case changed
     }
-    
+
     var touchAreaSize: CGSize = .zero
 
     private(set) var state: State = .inactive

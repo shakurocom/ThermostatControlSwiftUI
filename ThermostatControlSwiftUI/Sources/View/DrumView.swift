@@ -11,14 +11,13 @@ public struct DrumView: View {
 
     @StateObject private var model: DrumViewModel
 
-    init(value: Binding<MeasurementValue>,
-         maxUnitValue: CGFloat,
-         minUnitValue: CGFloat,
-         valueTransformer: MeasurementValueTransformer) {
+    let configuration: DrumViewModel.Configuration
+
+    init(value: Binding<MeasurementValueFormatter.Value>,
+         configuration: DrumViewModel.Configuration) {
+        self.configuration = configuration
         _model = StateObject(wrappedValue: DrumViewModel(value: value,
-                                                         valueTransformer: valueTransformer,
-                                                         maxValue: maxUnitValue,
-                                                         minValue: minUnitValue))
+                                                         configuration: configuration))
     }
 
     public var body: some View {
@@ -39,6 +38,9 @@ public struct DrumView: View {
         })
         // .background(.yellow)
         .clipped()
+        .onChange(of: configuration, { _, newValue in
+            model.setConfiguration(newValue)
+        })
         .onDisappear(perform: {
             model.stopDeceleration()
         })
@@ -69,6 +71,6 @@ private extension DrumView {
 }
 
 #Preview {
-    @State var value: MeasurementValue = .zero
-    return DrumView(value: $value, maxUnitValue: 99, minUnitValue: 45, valueTransformer: DefaultMeasurementValueTransformer.fahrenheitValueTransformer()).background(.black)
+    @State var value: MeasurementValueFormatter.Value = .zero
+    return DrumView(value: $value, configuration: DrumViewModel.Configuration(maxValue: 99, minValue: 45, valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter())).background(.black)
 }

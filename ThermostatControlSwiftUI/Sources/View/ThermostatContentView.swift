@@ -12,9 +12,8 @@ struct ThermostatContentView: View {
     @State private var isEnabled = true
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
-    @State private var currentValue = MeasurementValue(raw: 70, transformed: 70, string: "70")
-
-    @State private var valueTransformer = DefaultMeasurementValueTransformer.fahrenheitValueTransformer()
+    @State private var currentValue = MeasurementValueFormatter.Value(raw: 70, formatted: 70, string: "70")
+    @State private var drumViewConfiguration = DrumViewModel.Configuration(maxValue: 99, minValue: 45, valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter())
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -42,9 +41,7 @@ struct ThermostatContentView: View {
                 .background(Color.black)
 
                 DrumView(value: $currentValue,
-                         maxUnitValue: 99,
-                         minUnitValue: 45,
-                         valueTransformer: valueTransformer)
+                         configuration: drumViewConfiguration)
 
             }
 
@@ -116,7 +113,7 @@ private extension ThermostatContentView {
     }
 
     @ViewBuilder private func makeLabels() -> some View {
-        VStack(spacing: -12, content: {
+        VStack(alignment: .leading, spacing: -12, content: {
             Text("°F")
                 .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
                 .foregroundColor(.white.opacity(0.5))
@@ -124,9 +121,10 @@ private extension ThermostatContentView {
             Text(currentValue.string)
                 .lineLimit(0)
                 .font(Stylesheet.FontFace.SFProRoundedBold.font(104))
-                .minimumScaleFactor(0.8)
+                .minimumScaleFactor(0.6)
                 .foregroundColor(.white)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(.leading)
+                .frame(height: 124, alignment: .leading)
             Text("􁃛 56%")
                 .font(Stylesheet.FontFace.SFProRoundedMedium.font(16))
                 .foregroundColor(.white.opacity(0.5))

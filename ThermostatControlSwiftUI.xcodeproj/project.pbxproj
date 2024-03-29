@@ -20,8 +20,8 @@
 		F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */; };
 		F57405462B98F78E00494384 /* CGPoint+Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405442B98F78E00494384 /* CGPoint+Distance.swift */; };
 		F57405482B98F7B300494384 /* DecelerationBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57405472B98F7B300494384 /* DecelerationBehaviour.swift */; };
-		F5A8B0102BB58B59007F6DE1 /* MeasurementValueTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A8B00F2BB58B59007F6DE1 /* MeasurementValueTransformer.swift */; };
-		F5A8B0152BB58E59007F6DE1 /* MeasurementValueTransformer+FactoryMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A8B0142BB58E59007F6DE1 /* MeasurementValueTransformer+FactoryMethods.swift */; };
+		F5A8B0102BB58B59007F6DE1 /* MeasurementValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A8B00F2BB58B59007F6DE1 /* MeasurementValueFormatter.swift */; };
+		F5A8B0152BB58E59007F6DE1 /* MeasurementValueFormatter+FactoryMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A8B0142BB58E59007F6DE1 /* MeasurementValueFormatter+FactoryMethods.swift */; };
 		F5A8B0172BB591A7007F6DE1 /* DrumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A8B0162BB591A7007F6DE1 /* DrumViewModel.swift */; };
 		F5DBFAD32B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DBFAD22B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift */; };
 		F5DBFAD52B7168A00087E1E8 /* ThermostatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */; };
@@ -46,8 +46,8 @@
 		F57405432B98F78E00494384 /* CGFloat+RoundToNearest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+RoundToNearest.swift"; sourceTree = "<group>"; };
 		F57405442B98F78E00494384 /* CGPoint+Distance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Distance.swift"; sourceTree = "<group>"; };
 		F57405472B98F7B300494384 /* DecelerationBehaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecelerationBehaviour.swift; sourceTree = "<group>"; };
-		F5A8B00F2BB58B59007F6DE1 /* MeasurementValueTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementValueTransformer.swift; sourceTree = "<group>"; };
-		F5A8B0142BB58E59007F6DE1 /* MeasurementValueTransformer+FactoryMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MeasurementValueTransformer+FactoryMethods.swift"; sourceTree = "<group>"; };
+		F5A8B00F2BB58B59007F6DE1 /* MeasurementValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementValueFormatter.swift; sourceTree = "<group>"; };
+		F5A8B0142BB58E59007F6DE1 /* MeasurementValueFormatter+FactoryMethods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MeasurementValueFormatter+FactoryMethods.swift"; sourceTree = "<group>"; };
 		F5A8B0162BB591A7007F6DE1 /* DrumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrumViewModel.swift; sourceTree = "<group>"; };
 		F5DBFACF2B7168A00087E1E8 /* ThermostatControlSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThermostatControlSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5DBFAD22B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermostatControlSwiftUIApp.swift; sourceTree = "<group>"; };
@@ -134,8 +134,8 @@
 			children = (
 				F554943D2BADB6E400E43FEE /* DrumView.swift */,
 				F5A8B0162BB591A7007F6DE1 /* DrumViewModel.swift */,
-				F5A8B00F2BB58B59007F6DE1 /* MeasurementValueTransformer.swift */,
-				F5A8B0142BB58E59007F6DE1 /* MeasurementValueTransformer+FactoryMethods.swift */,
+				F5A8B00F2BB58B59007F6DE1 /* MeasurementValueFormatter.swift */,
+				F5A8B0142BB58E59007F6DE1 /* MeasurementValueFormatter+FactoryMethods.swift */,
 				F5708EAA2BB2D9BE0052644E /* RotationGestureRecognizer.swift */,
 			);
 			name = DrumView;
@@ -316,14 +316,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5A8B0152BB58E59007F6DE1 /* MeasurementValueTransformer+FactoryMethods.swift in Sources */,
+				F5A8B0152BB58E59007F6DE1 /* MeasurementValueFormatter+FactoryMethods.swift in Sources */,
 				F5DBFAD52B7168A00087E1E8 /* ThermostatContentView.swift in Sources */,
 				F554943E2BADB6E400E43FEE /* DrumView.swift in Sources */,
 				F57405482B98F7B300494384 /* DecelerationBehaviour.swift in Sources */,
 				F56A807D2BAD61640057532F /* FanSlider.swift in Sources */,
 				F57405452B98F78E00494384 /* CGFloat+RoundToNearest.swift in Sources */,
 				F5A8B0172BB591A7007F6DE1 /* DrumViewModel.swift in Sources */,
-				F5A8B0102BB58B59007F6DE1 /* MeasurementValueTransformer.swift in Sources */,
+				F5A8B0102BB58B59007F6DE1 /* MeasurementValueFormatter.swift in Sources */,
 				F571BD052B99C05D007E730F /* GlowingButton.swift in Sources */,
 				F5007B422BA98F9100940F6C /* Stylesheet.swift in Sources */,
 				F5DBFAD32B7168A00087E1E8 /* ThermostatControlSwiftUIApp.swift in Sources */,
