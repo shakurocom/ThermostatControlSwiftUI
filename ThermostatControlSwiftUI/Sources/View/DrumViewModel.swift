@@ -63,7 +63,6 @@ final class DrumViewModel: ObservableObject {
     /// - parameter newValue:
     public func setValue(_ newValue: CGFloat) {
         let newValue = configuration.valueFormatter.formatted(rawValue: min(max(newValue, configuration.minValue), configuration.maxValue))
-        debugPrint(newValue)
         if value != newValue {
             value = newValue
         }

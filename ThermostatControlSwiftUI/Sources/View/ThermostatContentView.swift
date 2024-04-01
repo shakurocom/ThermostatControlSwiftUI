@@ -11,6 +11,17 @@ enum ThermostatMode {
     case auto
     case cooling
     case heating
+
+    var color: Color {
+        switch self {
+        case .auto:
+            Stylesheet.Color.autoMode
+        case .cooling:
+            Stylesheet.Color.coldMode
+        case .heating:
+            Stylesheet.Color.hotMode
+        }
+    }
 }
 
 struct ThermostatContentView: View {
@@ -52,13 +63,15 @@ struct ThermostatContentView: View {
                 .background(Color.black)
 
                 DrumView(value: $currentValue,
-                         configuration: drumViewConfiguration)
+                         configuration: drumViewConfiguration,
+                         isEnabled: isEnabled,
+                         contentViewBuilder: makeDrumImage)
 
             }
 
             Spacer(minLength: 72)
 
-            FanSlider(isEnabled: $isEnabled, value: $fanSpeed)
+            FanSlider(value: $fanSpeed, isEnabled: isEnabled, color: mode.color)
         }
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .containerRelativeFrame([.horizontal, .vertical])
@@ -115,7 +128,7 @@ private extension ThermostatContentView {
             HStack(content: {
                 Toggle("On/Of", isOn: $isEnabled)
                     .labelsHidden()
-                    .tint(Stylesheet.Color.coldMode)
+                    .tint(mode.color)
                     .onChange(of: isEnabled) { _, _ in
                         if isEnabled {
                             autoModeButtonState.insert(.enabled)
@@ -154,13 +167,14 @@ private extension ThermostatContentView {
                 .frame(maxWidth: .infinity, alignment: .leading)
         })
         .frame(maxWidth: .infinity, alignment: .leading)
+        .opacity(isEnabled ? 1.0 : 0.2)
     }
 
     @ViewBuilder private func makeBottomButtons() -> some View {
         VStack(spacing: 4, content: {
             GlowingButton(image: Image(systemName: "a.circle"),
                           title: "Auto",
-                          selectedColor: Stylesheet.Color.autoMode,
+                          selectedColor: ThermostatMode.auto.color,
                           cornerRadius: 16,
                           animateImageOnSelectionChanged: false,
                           state: $autoModeButtonState,
@@ -172,7 +186,7 @@ private extension ThermostatContentView {
             HStack(spacing: 4) {
                 GlowingButton(image: Image(systemName: "snowflake"),
                               title: nil,
-                              selectedColor: Stylesheet.Color.coldMode,
+                              selectedColor: ThermostatMode.cooling.color,
                               cornerRadius: 16,
                               animateImageOnSelectionChanged: true,
                               state: $coolingModeButtonState,
@@ -182,7 +196,7 @@ private extension ThermostatContentView {
                 .frame(width: 80, height: 80)
                 GlowingButton(image: Image(systemName: "sun.max"),
                               title: nil,
-                              selectedColor: Stylesheet.Color.hotMode,
+                              selectedColor: ThermostatMode.heating.color,
                               cornerRadius: 16,
                               animateImageOnSelectionChanged: true,
                               state: $heatingModeButtonState,
@@ -194,6 +208,24 @@ private extension ThermostatContentView {
         })
     }
 
+    @ViewBuilder private func makeDrumImage(_ size: CGSize, _ rotationAngle: Angle) -> some View {
+        Image("drum")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .mask {
+                Image("drumMask")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .rotationEffect(-rotationAngle, anchor: .center)
+            }
+            .frame(width: size.height,
+                   height: size.height,
+                   alignment: .leading)
+        // .background(.red)
+            .clipped()
+            .rotationEffect(rotationAngle, anchor: .center)
+            .opacity(isEnabled ? 1.0 : 0.8)
+    }
 }
 
 // MARK: Helpers

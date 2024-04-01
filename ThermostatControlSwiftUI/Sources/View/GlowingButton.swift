@@ -37,7 +37,7 @@ struct GlowingButton: View {
     private var shadowRadius: CGFloat {
         return state.contains([.selected, .enabled]) ? 16 : 0
     }
-    
+
     private var contentOpacity: CGFloat {
         if state.contains(.enabled) {
             return state.contains(.selected) ? 1.0 : 0.4
@@ -48,14 +48,10 @@ struct GlowingButton: View {
 
     var body: some View {
         Button(action: {
-            guard state.contains(.enabled) else {
+            guard state.contains(.enabled), !state.contains(.selected) else {
                 return
             }
-            if state.contains(.selected) {
-                state.remove(.selected)
-            } else {
-                state.insert(.selected)
-            }
+            state.insert(.selected)
             action()
         }, label: {
             makeBody()
