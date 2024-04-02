@@ -9,16 +9,16 @@ import SwiftUI
 
 public struct DrumView<ContentViewType: View>: View {
 
-    let isEnabled: Bool
-    let configuration: DrumViewModel.Configuration
+    private let isEnabled: Bool
+    private let configuration: DrumViewModel.Configuration
 
     @StateObject private var model: DrumViewModel
     @ViewBuilder private let contentViewBuilder: (_ size: CGSize, _ rotationAngle: Angle) -> ContentViewType
 
-    init(value: Binding<MeasurementValueFormatter.Value>,
-         configuration: DrumViewModel.Configuration,
-         isEnabled: Bool,
-         @ViewBuilder contentViewBuilder: @escaping (_ size: CGSize, _ rotationAngle: Angle) -> ContentViewType) {
+    public init(value: Binding<MeasurementValueFormatter.Value>,
+                configuration: DrumViewModel.Configuration,
+                isEnabled: Bool,
+                @ViewBuilder contentViewBuilder: @escaping (_ size: CGSize, _ rotationAngle: Angle) -> ContentViewType) {
         self.configuration = configuration
         self.contentViewBuilder = contentViewBuilder
         self.isEnabled = isEnabled
@@ -63,7 +63,7 @@ public struct DrumView<ContentViewType: View>: View {
 
         var body: some View {
             DrumView(value: $value,
-                     configuration: DrumViewModel.Configuration(maxValue: 99, minValue: 45, valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter()),
+                     configuration: DrumViewModel.Configuration(maxValue: 99, minValue: 45, maxAngle: .radians(.pi * 0.5), valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter()),
                      isEnabled: isEnabled,
                      contentViewBuilder: { size, rotationAngle in
                 Image("drum")

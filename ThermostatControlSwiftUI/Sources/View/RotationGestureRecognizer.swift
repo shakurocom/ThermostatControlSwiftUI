@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-final class RotationGestureRecognizer {
+public final class RotationGestureRecognizer {
 
-    struct Value: Equatable {
+    public struct Value: Equatable {
 
-        static var zero: Value {
+        public static var zero: Value {
             Value(state: .inactive,
                   angleRadians: 0,
                   previousAngleRadians: 0,
@@ -20,21 +20,21 @@ final class RotationGestureRecognizer {
                   touchAreaSize: .zero)
         }
 
-        let state: RotationGestureRecognizer.State
-        let angle: Angle
-        let previousAngle: Angle
-        let angleOffset: Angle
-        let angularVelocity: CGFloat
-        let clockwise: Bool
+        public let state: RotationGestureRecognizer.State
+        public let angle: Angle
+        public let previousAngle: Angle
+        public let angleOffset: Angle
+        public let angularVelocity: CGFloat
+        public let clockwise: Bool
 
-        let touchAreaSize: CGSize
+        public let touchAreaSize: CGSize
 
-        init(state: RotationGestureRecognizer.State,
-             angleRadians: CGFloat,
-             previousAngleRadians: CGFloat,
-             angularVelocity: CGFloat,
-             clockwise: Bool,
-             touchAreaSize: CGSize) {
+        public init(state: RotationGestureRecognizer.State,
+                    angleRadians: CGFloat,
+                    previousAngleRadians: CGFloat,
+                    angularVelocity: CGFloat,
+                    clockwise: Bool,
+                    touchAreaSize: CGSize) {
             self.state = state
             self.angle = Angle.radians(angleRadians)
             self.previousAngle = Angle.radians(previousAngleRadians)
@@ -47,20 +47,20 @@ final class RotationGestureRecognizer {
 
     }
 
-    enum State {
+    public enum State {
         case inactive
         case started
         case changed
     }
 
-    var touchAreaSize: CGSize = .zero
+    public var touchAreaSize: CGSize = .zero
 
-    private(set) var state: State = .inactive
+    public private(set) var state: State = .inactive
 
     private var dragGesture: AnyGesture<Value>!
     private var previousAngle: CGFloat = 0
 
-    init() {
+    public init() {
         self.dragGesture = AnyGesture(
             DragGesture(minimumDistance: 0, coordinateSpace: .local)
                 .onChanged({ [weak self] _ in
@@ -78,11 +78,11 @@ final class RotationGestureRecognizer {
         )
     }
 
-    func gesture() -> AnyGesture<Value> {
+    public func gesture() -> AnyGesture<Value> {
         return dragGesture
     }
 
-    func gesture(touchAreaSize: CGSize) -> AnyGesture<Value> {
+    public func gesture(touchAreaSize: CGSize) -> AnyGesture<Value> {
         self.touchAreaSize = touchAreaSize
         return dragGesture
     }

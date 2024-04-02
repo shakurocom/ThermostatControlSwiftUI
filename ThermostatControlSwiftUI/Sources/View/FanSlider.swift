@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct FanSlider: View {
+public struct FanSlider: View {
 
-    @Binding private(set) var value: CGFloat
+    @Binding public private(set) var value: CGFloat
 
-    let isEnabled: Bool
-    let color: Color
+    public let isEnabled: Bool
+    public let color: Color
 
     @State private var leftFunRotation: CGFloat = 0
     @State private var rightFunRotation: CGFloat = 0
 
-    var body: some View {
+    public var body: some View {
         HStack(alignment: .center, spacing: 8, content: {
             Text("􁁌")
                 .font(Stylesheet.FontFace.SFProRoundedSemiBold.font(12))
@@ -48,7 +48,7 @@ struct FanSlider: View {
         .cornerRadius(12)
         .disabled(!isEnabled)
         .onChange(of: value) { oldValue, newValue in
-           onSliderValueChange(oldValue: oldValue, newValue: newValue)
+            onSliderValueChange(oldValue: oldValue, newValue: newValue)
         }
     }
 

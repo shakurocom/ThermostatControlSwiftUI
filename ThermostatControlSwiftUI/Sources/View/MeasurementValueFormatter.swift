@@ -1,22 +1,22 @@
 import UIKit
 
-struct MeasurementValueFormatter: Equatable {
+public struct MeasurementValueFormatter: Equatable {
 
     public struct Value: Equatable {
 
-        static var zero: Value {
+        public static var zero: Value {
             return Value(raw: 0, formatted: 0, string: "")
         }
 
-        let raw: CGFloat
-        let formatted: CGFloat
-        let string: String
+        public let raw: CGFloat
+        public let formatted: CGFloat
+        public let string: String
 
     }
 
-    let suffix: String
-    let prefix: String
-    let roundingThreshold: CGFloat
+    public let suffix: String
+    public let prefix: String
+    public let roundingThreshold: CGFloat
 
     private let formatter: NumberFormatter
 
@@ -27,11 +27,11 @@ struct MeasurementValueFormatter: Equatable {
      - parameter minimumFractionDigits: minimum fraction digits to use when converting to string
      - parameter maximumFractionDigits: maximum fraction digits to use when converting to string
      **/
-    init(suffix: String = "",
-         prefix: String = "",
-         roundingThreshold: CGFloat = 1,
-         minimumFractionDigits: Int = 0,
-         maximumFractionDigits: Int = 0) {
+    public init(suffix: String = "",
+                prefix: String = "",
+                roundingThreshold: CGFloat = 1,
+                minimumFractionDigits: Int = 0,
+                maximumFractionDigits: Int = 0) {
         formatter = NumberFormatter()
         formatter.minimumFractionDigits = minimumFractionDigits
         formatter.maximumFractionDigits = maximumFractionDigits

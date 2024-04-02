@@ -4,7 +4,12 @@
 
 import CoreGraphics
 
-extension CGPoint {
+public extension CGPoint {
+
+    /// Multiplies a point by the specified amount.
+    static func * (left: CGPoint, right: CGFloat) -> CGPoint {
+        return CGPoint(x: left.x * right, y: left.y * right)
+    }
 
     /// Finds the square distance to a point.
     /// - parameter point: specified point.
@@ -20,8 +25,4 @@ extension CGPoint {
         return sqrt(squaredDistance(to: point))
     }
 
-    /// Multiplies a point by the specified amount.
-    static func * (left: CGPoint, right: CGFloat) -> CGPoint {
-        return CGPoint(x: left.x * right, y: left.y * right)
-    }
 }

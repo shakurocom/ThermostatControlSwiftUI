@@ -23,8 +23,8 @@ public final class DecelerationBehaviour {
     ///  Used to slow down animation
     /// - Parameters:
     ///  - velocity: Initial velocity.
-    ///  - distance: Block to be called for decelaration distance.
-    ///  - completion: Block to be called  when minVelocity > velocity.
+    ///  - onUpdate: Block to be called for decelaration distance.
+    ///  - onComplete: Block to be called  when minVelocity > velocity.
     public func decelerate(velocity: CGFloat,
                            onUpdate: ((_ distance: CGFloat) -> Void)?,
                            onComplete: (() -> Void)? = nil) {
@@ -44,7 +44,11 @@ public final class DecelerationBehaviour {
         onComplete = nil
     }
 
-    // MARK: - Private
+}
+
+// MARK: - Private
+
+private extension DecelerationBehaviour {
 
     private func startTimer() {
         stopTimer()

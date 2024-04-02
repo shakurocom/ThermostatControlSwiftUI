@@ -8,23 +8,29 @@
 import SwiftUI
 import Shakuro_CommonTypes
 
-struct GlowingButton: View {
+public struct GlowingButton: View {
 
-    struct ControlState: OptionSet {
-        let rawValue: Int32
-        static let selected = ControlState(rawValue: 1 << 0)
-        static let enabled = ControlState(rawValue: 1 << 1)
+    public struct ControlState: OptionSet {
+
+        public let rawValue: Int32
+        public static let selected = ControlState(rawValue: 1 << 0)
+        public static let enabled = ControlState(rawValue: 1 << 1)
+
+        public init(rawValue: Int32) {
+            self.rawValue = rawValue
+        }
+
     }
 
-    let image: Image?
-    let title: String?
-    let selectedColor: Color
-    let cornerRadius: CGFloat
-    let animateImageOnSelectionChanged: Bool
+    @Binding public private(set) var state: ControlState
 
-    @Binding private(set) var state: ControlState
+    public let image: Image?
+    public let title: String?
+    public let selectedColor: Color
+    public let cornerRadius: CGFloat
+    public let animateImageOnSelectionChanged: Bool
 
-    let action: () -> Void
+    public let action: () -> Void
 
     private var currentBGColor: Color {
         return state.contains([.selected, .enabled]) ? selectedColor.opacity(0.14) : .white.opacity(0.08)
@@ -46,7 +52,7 @@ struct GlowingButton: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         Button(action: {
             guard state.contains(.enabled), !state.contains(.selected) else {
                 return
@@ -144,18 +150,18 @@ private extension GlowingButton {
 
         var body: some View {
             VStack(alignment: .center, content: {
-                GlowingButton(image: Image(systemName: "snowflake"),
+                GlowingButton(state: $button1,
+                              image: Image(systemName: "snowflake"),
                               title: "Auto",
                               selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
                               cornerRadius: 16,
-                              animateImageOnSelectionChanged: true,
-                              state: $button1, action: {}).frame(width: 164, height: 80)
-                GlowingButton(image: Image(systemName: "snowflake"),
+                              animateImageOnSelectionChanged: true, action: {}).frame(width: 164, height: 80)
+                GlowingButton(state: $button2,
+                              image: Image(systemName: "snowflake"),
                               title: nil,
                               selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
                               cornerRadius: 16,
-                              animateImageOnSelectionChanged: false,
-                              state: $button2, action: {}).frame(width: 80, height: 80)
+                              animateImageOnSelectionChanged: false, action: {}).frame(width: 80, height: 80)
             })
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.black)

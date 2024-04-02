@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 enum ThermostatMode {
     case auto
@@ -28,10 +29,12 @@ struct ThermostatContentView: View {
 
     @State private var mode: ThermostatMode = .auto
     @State private var isEnabled = false
+    @State private var lottieViewState: LottieViewState = .stoppedHidden
+    @State private var showColoredDrum: Bool = false
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
-    @State private var currentValue = MeasurementValueFormatter.Value(raw: 70, formatted: 70, string: "70")
-    @State private var drumViewConfiguration = DrumViewModel.Configuration(maxValue: 99, minValue: 45, valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter())
+    @State private var currentValue = MeasurementValueFormatter.Value(raw: 99, formatted: 99, string: "99")
+    @State private var drumViewConfiguration = DrumViewModel.Configuration(maxValue: 99, minValue: 45, maxAngle: .radians(.pi * 0.5), valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter())
 
     @State private var autoModeButtonState: GlowingButton.ControlState = [.selected]
     @State private var heatingModeButtonState: GlowingButton.ControlState = []
@@ -131,10 +134,15 @@ private extension ThermostatContentView {
                     .tint(mode.color)
                     .onChange(of: isEnabled) { _, _ in
                         if isEnabled {
+                            lottieViewState = LottieViewState.playing(fromProgress: lottieViewState.isHidden ? 0.25 : nil,
+                                                                      toProgress: 0.75)
                             autoModeButtonState.insert(.enabled)
                             heatingModeButtonState.insert(.enabled)
                             coolingModeButtonState.insert(.enabled)
                         } else {
+                            setColoredDrumHiddenAnimated(true)
+                            lottieViewState = LottieViewState.playingReversed(fromProgress: lottieViewState.isHidden ? 0.75 : nil,
+                                                                              toProgress: 0.25)
                             autoModeButtonState.remove(.enabled)
                             heatingModeButtonState.remove(.enabled)
                             coolingModeButtonState.remove(.enabled)
@@ -172,34 +180,33 @@ private extension ThermostatContentView {
 
     @ViewBuilder private func makeBottomButtons() -> some View {
         VStack(spacing: 4, content: {
-            GlowingButton(image: Image(systemName: "a.circle"),
+            GlowingButton(state: $autoModeButtonState, image: Image(systemName: "a.circle"),
                           title: "Auto",
                           selectedColor: ThermostatMode.auto.color,
                           cornerRadius: 16,
                           animateImageOnSelectionChanged: false,
-                          state: $autoModeButtonState,
                           action: {
                 mode = .auto
             })
             .frame(width: 164, height: 80)
             .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
             HStack(spacing: 4) {
-                GlowingButton(image: Image(systemName: "snowflake"),
+                GlowingButton(state: $coolingModeButtonState,
+                              image: Image(systemName: "snowflake"),
                               title: nil,
                               selectedColor: ThermostatMode.cooling.color,
                               cornerRadius: 16,
                               animateImageOnSelectionChanged: true,
-                              state: $coolingModeButtonState,
                               action: {
                     mode = .cooling
                 })
                 .frame(width: 80, height: 80)
-                GlowingButton(image: Image(systemName: "sun.max"),
+                GlowingButton(state: $heatingModeButtonState,
+                              image: Image(systemName: "sun.max"),
                               title: nil,
                               selectedColor: ThermostatMode.heating.color,
                               cornerRadius: 16,
                               animateImageOnSelectionChanged: true,
-                              state: $heatingModeButtonState,
                               action: {
                     mode = .heating
                 })
@@ -209,7 +216,31 @@ private extension ThermostatContentView {
     }
 
     @ViewBuilder private func makeDrumImage(_ size: CGSize, _ rotationAngle: Angle) -> some View {
-        Image("drum")
+        makeDrumImage(name: "drum", size: size, rotationAngle: rotationAngle).opacity(showColoredDrum ? 0.0 : 1.0)
+        makeDrumImage(name: "coloredDrum", size: size, rotationAngle: rotationAngle).opacity(showColoredDrum ? 1.0 : 0.0)
+        if !lottieViewState.isHidden {
+            LottieView(animation: .named("ThermostatLottie"))
+                .resizable()
+                .playbackMode(lottieViewState.playbackMode)
+                .animationDidFinish({ completed in
+                    guard completed else {
+                        return
+                    }
+                    if isEnabled {
+                        setColoredDrumHiddenAnimated(false, completion: {
+                            lottieViewState = .stoppedHidden
+                        })
+                    } else {
+                        lottieViewState = .stoppedHidden
+                    }
+                })
+                .clipped()
+                .rotationEffect(rotationAngle, anchor: .center)
+        }
+    }
+
+    @ViewBuilder private func makeDrumImage(name: String, size: CGSize, rotationAngle: Angle) -> some View {
+        Image(name)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .mask {
@@ -221,16 +252,24 @@ private extension ThermostatContentView {
             .frame(width: size.height,
                    height: size.height,
                    alignment: .leading)
-        // .background(.red)
             .clipped()
             .rotationEffect(rotationAngle, anchor: .center)
             .opacity(isEnabled ? 1.0 : 0.8)
     }
+
 }
 
 // MARK: Helpers
 
 private extension ThermostatContentView {
+
+    func setColoredDrumHiddenAnimated(_ hidden: Bool, completion: (() -> Void)? = nil) {
+        withAnimation(.linear(duration: 0.2), completionCriteria: .logicallyComplete, {
+            showColoredDrum = !hidden
+        }, completion: {
+            completion?()
+        })
+    }
 
     func onModeChanged(_ oldValue: ThermostatMode, _ newValue: ThermostatMode) {
         switch newValue {
@@ -250,6 +289,36 @@ private extension ThermostatContentView {
     }
 
 }
+
+// MARK: LottieViewState
+
+private extension ThermostatContentView {
+
+    struct LottieViewState {
+
+       let playbackMode: LottiePlaybackMode
+       let isHidden: Bool
+
+        static func playing(fromProgress: AnimationProgressTime?,
+                            toProgress: AnimationProgressTime) -> LottieViewState {
+            LottieViewState(playbackMode: .playing(.fromProgress(fromProgress, toProgress: toProgress, loopMode: .playOnce)),
+                            isHidden: false)
+        }
+        static func playingReversed(fromProgress: AnimationProgressTime?,
+                                    toProgress: AnimationProgressTime) -> LottieViewState {
+            LottieViewState(playbackMode: .playing(.fromProgress(fromProgress, toProgress: toProgress, loopMode: .playOnce)),
+                            isHidden: false)
+        }
+
+        static var stoppedHidden: LottieViewState {
+            LottieViewState(playbackMode: .paused, isHidden: true)
+        }
+
+   }
+
+}
+
+// MARK: - Preview
 
 #Preview {
     ThermostatContentView()

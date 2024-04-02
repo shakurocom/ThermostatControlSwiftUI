@@ -1,6 +1,6 @@
 import UIKit
 
-extension MeasurementValueFormatter {
+public extension MeasurementValueFormatter {
 
     static func humidityValueFormatter() -> MeasurementValueFormatter {
         return MeasurementValueFormatter(suffix: "%")
