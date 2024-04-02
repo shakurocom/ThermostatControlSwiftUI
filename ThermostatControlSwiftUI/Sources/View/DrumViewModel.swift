@@ -73,16 +73,23 @@ public final class DrumViewModel: ObservableObject {
         decelerationBehaviour.stop()
     }
 
-    public func setValue(_ newValue: CGFloat, updateRotation: Bool = false) {
-        let newValue = configuration.valueFormatter.formatted(rawValue: min(max(newValue, configuration.minValue), configuration.maxValue))
-        if value != newValue {
-            value = newValue
+    public func setValue(_ newValue: CGFloat, updateRotation: Bool) {
+        let newFormattedValue = configuration.valueFormatter.formatted(rawValue: min(max(newValue, configuration.minValue), configuration.maxValue))
+        let oldValue = value
+        if value != newFormattedValue {
+            value = newFormattedValue
+        }
+        if updateRotation {
+            let newRotationRad = (newFormattedValue.raw - configuration.minValue) / configuration.angleToValueFactor - configuration.maxAngleRad
+            if rotationRad != newRotationRad {
+                rotationRad = newRotationRad
+            }
         }
     }
 
     public func setConfiguration(_ config: Configuration) {
         configuration = config
-        setValue(value.raw)
+        setValue(value.raw, updateRotation: true)
     }
 
     public func stopDeceleration() {
@@ -162,7 +169,7 @@ private extension DrumViewModel {
 
         let valueOffset = offsetRad * configuration.angleToValueFactor
         let oldValue = value.formatted
-        setValue(value.raw + valueOffset)
+        setValue(value.raw + valueOffset, updateRotation: false)
         if abs(oldValue - value.formatted) > CGFloat.ulpOfOne {
             feedbackGenerator?.selectionChanged()
             feedbackGenerator?.prepare()
