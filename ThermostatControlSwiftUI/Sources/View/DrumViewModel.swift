@@ -61,8 +61,6 @@ public final class DrumViewModel: ObservableObject {
         return deceleration
     }()
 
-    private var feedbackGenerator: UISelectionFeedbackGenerator?
-
     public init(rawValue: CGFloat,
                 configuration: Configuration) {
         self.configuration = configuration
@@ -105,7 +103,6 @@ public final class DrumViewModel: ObservableObject {
             let offset = Angle.radians(clockwise ? value : -value)
             self?.update(offset: offset)
         }, onComplete: { [weak self] in
-            self?.feedbackGenerator = nil
             self?.updateToMaxRotationIfNeededAnimated()
         })
         return true
@@ -134,8 +131,6 @@ private extension DrumViewModel {
                     break
                 case .started:
                     actualSelf.stopDeceleration()
-                    actualSelf.feedbackGenerator = UISelectionFeedbackGenerator()
-                    actualSelf.feedbackGenerator?.prepare()
                 case .changed:
                     actualSelf.update(offset: value.angleOffset)
                 }
@@ -145,7 +140,6 @@ private extension DrumViewModel {
                     return
                 }
                 if !actualSelf.decelerate(value.angularVelocity, clockwise: value.clockwise) {
-                    actualSelf.feedbackGenerator = nil
                     actualSelf.updateToMaxRotationIfNeededAnimated()
                 }
             })
@@ -167,12 +161,7 @@ private extension DrumViewModel {
         }
 
         let valueOffset = offsetRad * configuration.angleToValueFactor
-        let oldValue = formattedValue.formatted
         setValue(formattedValue.raw + valueOffset, updateRotation: false)
-        if abs(oldValue - formattedValue.formatted) > CGFloat.ulpOfOne {
-            feedbackGenerator?.selectionChanged()
-            feedbackGenerator?.prepare()
-        }
     }
 
     private func updateToMaxRotationIfNeededAnimated() {

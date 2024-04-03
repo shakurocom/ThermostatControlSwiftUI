@@ -53,6 +53,9 @@ public struct DrumView<ContentViewType: View, ValueType: DrumValueObservable>: V
         // .background(.yellow)
         .clipped()
         .disabled(!isEnabled)
+        .sensoryFeedback(.selection, trigger: model.formattedValue, condition: { lhs, rhs in
+            return abs(lhs.formatted - rhs.formatted) > .ulpOfOne
+        })
         .onChange(of: configuration, { _, newValue in
             model.setConfiguration(newValue)
         })
