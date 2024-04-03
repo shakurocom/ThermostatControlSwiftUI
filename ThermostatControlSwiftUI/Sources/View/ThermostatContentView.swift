@@ -27,18 +27,38 @@ enum ThermostatMode {
 
 struct ThermostatContentView: View {
 
+    private final class DrumViewValue: DrumValueObservable {
+        @Published var formattedValue: MeasurementValueFormatter.Value
+        var rotation: Angle
+
+        init(formattedValue: MeasurementValueFormatter.Value) {
+            self.formattedValue = formattedValue
+            self.rotation = .degrees(0)
+        }
+    }
+
     @State private var mode: ThermostatMode = .auto
     @State private var isEnabled = false
     @State private var lottieViewState: LottieViewState = .stoppedHidden
     @State private var showColoredDrum: Bool = false
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
-    @State private var currentValue = MeasurementValueFormatter.Value(raw: 99, formatted: 99, string: "99")
-    @State private var drumViewConfiguration = DrumViewModel.Configuration(maxValue: 99, minValue: 45, maxAngle: .radians(.pi * 0.5), valueFormatter: MeasurementValueFormatter.fahrenheitValueFormatter())
+
+    @StateObject private var currentValue: DrumViewValue
+    @State private var drumViewConfiguration: DrumViewModel.Configuration
 
     @State private var autoModeButtonState: GlowingButton.ControlState = [.selected]
     @State private var heatingModeButtonState: GlowingButton.ControlState = []
     @State private var coolingModeButtonState: GlowingButton.ControlState = []
+
+    init() {
+        let valueFormatter = MeasurementValueFormatter.fahrenheitValueFormatter()
+        _drumViewConfiguration = State(wrappedValue: DrumViewModel.Configuration(maxValue: 99,
+                                                                                 minValue: 45,
+                                                                                 maxAngle: .radians(.pi * 0.5),
+                                                                                 valueFormatter: valueFormatter))
+        _currentValue = StateObject(wrappedValue: DrumViewValue(formattedValue: valueFormatter.formatted(rawValue: 70)))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -65,7 +85,7 @@ struct ThermostatContentView: View {
                 .frame(width: 164)
                 .background(Color.black)
 
-                DrumView(value: $currentValue,
+                DrumView(value: currentValue,
                          configuration: drumViewConfiguration,
                          isEnabled: isEnabled,
                          contentViewBuilder: makeDrumImage)
@@ -162,7 +182,7 @@ private extension ThermostatContentView {
                 .font(Stylesheet.FontFace.SFProRoundedBold.font(20))
                 .foregroundColor(.white.opacity(0.5))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Text(currentValue.string)
+            Text(currentValue.formattedValue.string)
                 .lineLimit(0)
                 .font(Stylesheet.FontFace.SFProRoundedBold.font(104))
                 .minimumScaleFactor(0.6)

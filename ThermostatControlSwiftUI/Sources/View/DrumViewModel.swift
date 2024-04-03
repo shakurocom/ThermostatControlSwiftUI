@@ -35,7 +35,7 @@ public final class DrumViewModel: ObservableObject {
         static let minValue: CGFloat = 0
     }
 
-    @Binding public private(set) var value: MeasurementValueFormatter.Value
+    public private(set) var formattedValue: MeasurementValueFormatter.Value = .zero
     @Published public private(set) var rotation: Angle = .radians(0)
 
     private var rotationRad: CGFloat = 0 {
@@ -63,10 +63,10 @@ public final class DrumViewModel: ObservableObject {
 
     private var feedbackGenerator: UISelectionFeedbackGenerator?
 
-    public init(value: Binding<MeasurementValueFormatter.Value>,
+    public init(rawValue: CGFloat,
                 configuration: Configuration) {
-        _value = value
-        setConfiguration(configuration)
+        self.configuration = configuration
+        setValue(rawValue, updateRotation: true)
     }
 
     deinit {
@@ -75,9 +75,8 @@ public final class DrumViewModel: ObservableObject {
 
     public func setValue(_ newValue: CGFloat, updateRotation: Bool) {
         let newFormattedValue = configuration.valueFormatter.formatted(rawValue: min(max(newValue, configuration.minValue), configuration.maxValue))
-        let oldValue = value
-        if value != newFormattedValue {
-            value = newFormattedValue
+        if formattedValue != newFormattedValue {
+            formattedValue = newFormattedValue
         }
         if updateRotation {
             let newRotationRad = (newFormattedValue.raw - configuration.minValue) / configuration.angleToValueFactor - configuration.maxAngleRad
@@ -89,7 +88,7 @@ public final class DrumViewModel: ObservableObject {
 
     public func setConfiguration(_ config: Configuration) {
         configuration = config
-        setValue(value.raw, updateRotation: true)
+        setValue(formattedValue.raw, updateRotation: true)
     }
 
     public func stopDeceleration() {
@@ -168,9 +167,9 @@ private extension DrumViewModel {
         }
 
         let valueOffset = offsetRad * configuration.angleToValueFactor
-        let oldValue = value.formatted
-        setValue(value.raw + valueOffset, updateRotation: false)
-        if abs(oldValue - value.formatted) > CGFloat.ulpOfOne {
+        let oldValue = formattedValue.formatted
+        setValue(formattedValue.raw + valueOffset, updateRotation: false)
+        if abs(oldValue - formattedValue.formatted) > CGFloat.ulpOfOne {
             feedbackGenerator?.selectionChanged()
             feedbackGenerator?.prepare()
         }
