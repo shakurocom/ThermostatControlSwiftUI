@@ -89,6 +89,7 @@ struct ThermostatContentView: View {
                          configuration: drumViewConfiguration,
                          isEnabled: isEnabled,
                          contentViewBuilder: makeDrumImage)
+                .allowsHitTesting((lottieViewState.isHidden && (lottieViewState.playbackMode == .paused)))
 
             }
 

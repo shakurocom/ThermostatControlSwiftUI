@@ -65,6 +65,7 @@ public struct GlowingButton: View {
         .background(currentBGColor)
         .cornerRadius(cornerRadius)
         .disabled(!state.contains(.enabled))
+        .sensoryFeedback(.impact, trigger: state.contains(.selected))
     }
 
 }
