@@ -152,22 +152,7 @@ private extension ThermostatContentView {
                 Toggle("On/Of", isOn: $isEnabled)
                     .labelsHidden()
                     .tint(mode.color)
-                    .onChange(of: isEnabled) { _, _ in
-                        if isEnabled {
-                            lottieViewState = LottieViewState.playing(fromProgress: lottieViewState.isHidden ? 0.25 : nil,
-                                                                      toProgress: 0.75)
-                            autoModeButtonState.insert(.enabled)
-                            heatingModeButtonState.insert(.enabled)
-                            coolingModeButtonState.insert(.enabled)
-                        } else {
-                            setColoredDrumHiddenAnimated(true)
-                            lottieViewState = LottieViewState.playingReversed(fromProgress: lottieViewState.isHidden ? 0.75 : nil,
-                                                                              toProgress: 0.25)
-                            autoModeButtonState.remove(.enabled)
-                            heatingModeButtonState.remove(.enabled)
-                            coolingModeButtonState.remove(.enabled)
-                        }
-                    }
+                    .onChange(of: isEnabled, onIsEnabledChanged)
             })
             .padding(.horizontal, 20)
             .frame(height: 64)
@@ -305,6 +290,28 @@ private extension ThermostatContentView {
             autoModeButtonState.remove(.selected)
             heatingModeButtonState.insert(.selected)
             coolingModeButtonState.remove(.selected)
+        }
+    }
+
+    func onIsEnabledChanged(_ oldValue: Bool, _ newValue: Bool) {
+        let currentRotationProgress = (drumViewConfiguration.maxAngleRad - currentValue.rotation.radians) / (drumViewConfiguration.maxAngleRad * 2) // from 0-1
+        let visibleAnimationProgress = 0.415 // depends on lottie.json values
+        let startAnimationProgress = 0.02 // depends on lottie.json values
+        let fromProgress = visibleAnimationProgress * currentRotationProgress + startAnimationProgress
+        let toProgress = fromProgress + visibleAnimationProgress
+        if isEnabled {
+            lottieViewState = LottieViewState.playing(fromProgress: lottieViewState.isHidden ? fromProgress : nil,
+                                                      toProgress: toProgress)
+            autoModeButtonState.insert(.enabled)
+            heatingModeButtonState.insert(.enabled)
+            coolingModeButtonState.insert(.enabled)
+        } else {
+            setColoredDrumHiddenAnimated(true)
+            lottieViewState = LottieViewState.playingReversed(fromProgress: lottieViewState.isHidden ? toProgress : nil,
+                                                              toProgress: fromProgress)
+            autoModeButtonState.remove(.enabled)
+            heatingModeButtonState.remove(.enabled)
+            coolingModeButtonState.remove(.enabled)
         }
     }
 
