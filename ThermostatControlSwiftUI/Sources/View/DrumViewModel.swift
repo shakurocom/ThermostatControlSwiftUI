@@ -77,7 +77,7 @@ public final class DrumViewModel: ObservableObject {
             formattedValue = newFormattedValue
         }
         if updateRotation {
-            let newRotationRad = (newFormattedValue.raw - configuration.minValue) / configuration.angleToValueFactor - configuration.maxAngleRad
+            let newRotationRad = configuration.maxAngleRad - (newFormattedValue.raw - configuration.minValue) / configuration.angleToValueFactor
             if rotationRad != newRotationRad {
                 rotationRad = newRotationRad
             }
