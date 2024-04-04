@@ -161,7 +161,7 @@ private extension DrumViewModel {
         }
 
         let valueOffset = offsetRad * configuration.angleToValueFactor
-        setValue(formattedValue.raw + valueOffset, updateRotation: false)
+        setValue(formattedValue.raw - valueOffset, updateRotation: false)
     }
 
     private func updateToMaxRotationIfNeededAnimated() {
