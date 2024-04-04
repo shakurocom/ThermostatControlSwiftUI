@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Shakuro_CommonTypes
 
 public struct GlowingButton: View {
 
@@ -154,13 +153,13 @@ private extension GlowingButton {
                 GlowingButton(state: $button1,
                               image: Image(systemName: "snowflake"),
                               title: "Auto",
-                              selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
+                              selectedColor: .coolingMode,
                               cornerRadius: 16,
                               animateImageOnSelectionChanged: true, action: {}).frame(width: 164, height: 80)
                 GlowingButton(state: $button2,
                               image: Image(systemName: "snowflake"),
                               title: nil,
-                              selectedColor: Color(UIColor(hex: "#30D158") ?? .green),
+                              selectedColor: .coolingMode,
                               cornerRadius: 16,
                               animateImageOnSelectionChanged: false, action: {}).frame(width: 80, height: 80)
             })

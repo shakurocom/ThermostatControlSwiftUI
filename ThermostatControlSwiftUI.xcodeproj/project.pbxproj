@@ -108,8 +108,8 @@
 				F5007B432BA994C500940F6C /* SF-Pro-Rounded-Regular.otf */,
 				F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */,
 				F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */,
-				F5DBFAD82B7168A10087E1E8 /* Preview Content */,
 				F5E514E22BBE799B001F29DC /* Colors.xcassets */,
+				F5DBFAD82B7168A10087E1E8 /* Preview Content */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
