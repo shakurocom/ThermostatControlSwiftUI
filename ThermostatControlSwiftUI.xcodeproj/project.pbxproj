@@ -28,6 +28,7 @@
 		F5DBFAD52B7168A00087E1E8 /* ThermostatContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */; };
 		F5DBFAD72B7168A10087E1E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */; };
 		F5DBFADA2B7168A10087E1E8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DBFAD92B7168A10087E1E8 /* Preview Assets.xcassets */; };
+		F5E514E32BBE799B001F29DC /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E514E22BBE799B001F29DC /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		F5DBFAD42B7168A00087E1E8 /* ThermostatContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThermostatContentView.swift; sourceTree = "<group>"; };
 		F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5DBFAD92B7168A10087E1E8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F5E514E22BBE799B001F29DC /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */,
 				F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */,
 				F5DBFAD82B7168A10087E1E8 /* Preview Content */,
+				F5E514E22BBE799B001F29DC /* Colors.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 				F55C007A2BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf in Resources */,
 				F54FDF472BBAB5E2001C2B49 /* ThermostatLottie.json in Resources */,
 				F55C00792BAC203E00FA0F86 /* SF-Pro-Rounded-Bold.otf in Resources */,
+				F5E514E32BBE799B001F29DC /* Colors.xcassets in Resources */,
 				F5DBFAD72B7168A10087E1E8 /* Assets.xcassets in Resources */,
 				F5007B442BA994C500940F6C /* SF-Pro-Rounded-Regular.otf in Resources */,
 			);

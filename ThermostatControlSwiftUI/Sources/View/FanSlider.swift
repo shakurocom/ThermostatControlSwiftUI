@@ -100,7 +100,7 @@ private extension FanSlider {
         var body: some View {
             VStack {
                 Toggle("On/Of", isOn: $isEnabled)
-                FanSlider(value: $value, isEnabled: isEnabled, color: Stylesheet.Color.coldMode)
+                FanSlider(value: $value, isEnabled: isEnabled, color: .coolingMode)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.black)

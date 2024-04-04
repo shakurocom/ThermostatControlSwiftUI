@@ -16,11 +16,11 @@ enum ThermostatMode {
     var color: Color {
         switch self {
         case .auto:
-            Stylesheet.Color.autoMode
+                .autoMode
         case .cooling:
-            Stylesheet.Color.coldMode
+                .coolingMode
         case .heating:
-            Stylesheet.Color.hotMode
+                .heatingMode
         }
     }
 }
@@ -39,8 +39,10 @@ struct ThermostatContentView: View {
 
     @State private var mode: ThermostatMode = .auto
     @State private var isEnabled = false
+
     @State private var lottieViewState: LottieViewState = .stoppedHidden
     @State private var showColoredDrum: Bool = false
+
     @State private var roomName = "Living Room"
     @State private var fanSpeed: CGFloat = 0.5
 
@@ -233,7 +235,11 @@ private extension ThermostatContentView {
                         return
                     }
                     if isEnabled {
+                        let oldState = lottieViewState
                         setColoredDrumHiddenAnimated(false, completion: {
+                            guard oldState == lottieViewState else {
+                                return
+                            }
                             lottieViewState = .stoppedHidden
                         })
                     } else {
@@ -322,10 +328,10 @@ private extension ThermostatContentView {
 
 private extension ThermostatContentView {
 
-    struct LottieViewState {
+    struct LottieViewState: Equatable {
 
-       let playbackMode: LottiePlaybackMode
-       let isHidden: Bool
+        let playbackMode: LottiePlaybackMode
+        let isHidden: Bool
 
         static func playing(fromProgress: AnimationProgressTime?,
                             toProgress: AnimationProgressTime) -> LottieViewState {
@@ -342,7 +348,7 @@ private extension ThermostatContentView {
             LottieViewState(playbackMode: .paused, isHidden: true)
         }
 
-   }
+    }
 
 }
 
