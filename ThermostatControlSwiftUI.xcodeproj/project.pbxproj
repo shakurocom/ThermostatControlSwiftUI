@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7AB86B26B569B32776D932F8 /* Pods_ThermostatControlSwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E817E31933ADECCE46D45673 /* Pods_ThermostatControlSwiftUI.framework */; };
+		A5248E882C082C7300B1494E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A5248E872C082C7300B1494E /* README.md */; };
+		A5248E8A2C082D0A00B1494E /* readme_animation.gif in Resources */ = {isa = PBXBuildFile; fileRef = A5248E892C082D0A00B1494E /* readme_animation.gif */; };
 		F5007B422BA98F9100940F6C /* Stylesheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5007B412BA98F9100940F6C /* Stylesheet.swift */; };
 		F5007B442BA994C500940F6C /* SF-Pro-Rounded-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5007B432BA994C500940F6C /* SF-Pro-Rounded-Regular.otf */; };
 		F54FDF472BBAB5E2001C2B49 /* ThermostatLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = F54FDF462BBAB5E2001C2B49 /* ThermostatLottie.json */; };
@@ -33,6 +35,8 @@
 
 /* Begin PBXFileReference section */
 		98A12F8E63BC429BB3B4BDB2 /* Pods-ThermostatControlSwiftUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThermostatControlSwiftUI.debug.xcconfig"; path = "Target Support Files/Pods-ThermostatControlSwiftUI/Pods-ThermostatControlSwiftUI.debug.xcconfig"; sourceTree = "<group>"; };
+		A5248E872C082C7300B1494E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A5248E892C082D0A00B1494E /* readme_animation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = readme_animation.gif; sourceTree = "<group>"; };
 		B06997BC910891D461C77E1B /* Pods-ThermostatControlSwiftUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThermostatControlSwiftUI.release.xcconfig"; path = "Target Support Files/Pods-ThermostatControlSwiftUI/Pods-ThermostatControlSwiftUI.release.xcconfig"; sourceTree = "<group>"; };
 		E817E31933ADECCE46D45673 /* Pods_ThermostatControlSwiftUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThermostatControlSwiftUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5007B412BA98F9100940F6C /* Stylesheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylesheet.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				F56A807A2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf */,
 				F5DBFAD62B7168A10087E1E8 /* Assets.xcassets */,
 				F5E514E22BBE799B001F29DC /* Colors.xcassets */,
+				A5248E892C082D0A00B1494E /* readme_animation.gif */,
 				F5DBFAD82B7168A10087E1E8 /* Preview Content */,
 			);
 			path = Resources;
@@ -150,6 +155,7 @@
 		F5DBFAC62B7168A00087E1E8 = {
 			isa = PBXGroup;
 			children = (
+				A5248E872C082C7300B1494E /* README.md */,
 				F5DBFAD12B7168A00087E1E8 /* ThermostatControlSwiftUI */,
 				F5DBFAD02B7168A00087E1E8 /* Products */,
 				045E820A4CECF3772F0A9D83 /* Pods */,
@@ -246,11 +252,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5DBFADA2B7168A10087E1E8 /* Preview Assets.xcassets in Resources */,
+				A5248E8A2C082D0A00B1494E /* readme_animation.gif in Resources */,
 				F56A807B2BAD60660057532F /* SF-Pro-Rounded-Semibold.otf in Resources */,
 				F55C007A2BAC203E00FA0F86 /* SF-Pro-Rounded-Medium.otf in Resources */,
 				F54FDF472BBAB5E2001C2B49 /* ThermostatLottie.json in Resources */,
 				F55C00792BAC203E00FA0F86 /* SF-Pro-Rounded-Bold.otf in Resources */,
 				F5E514E32BBE799B001F29DC /* Colors.xcassets in Resources */,
+				A5248E882C082C7300B1494E /* README.md in Resources */,
 				F5DBFAD72B7168A10087E1E8 /* Assets.xcassets in Resources */,
 				F5007B442BA994C500940F6C /* SF-Pro-Rounded-Regular.otf in Resources */,
 			);
