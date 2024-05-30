@@ -1,11 +1,13 @@
-![Shakuro PullToRefreshSwiftUI](Resources/readme_title_image.png)
+![Shakuro PullToRefreshSwiftUI](ThermostatControlSwiftUI/Resources/readme_title_image.png)
 <br><br>
 # ThermostatControlSwiftUI
 <br><br>
 
+
 ![](ThermostatControlSwiftUI/Resources/readme_animation.gif)
 
 
+<br><br>
 ## Give it a try and reach us
 
 Star this tool if you like it, it will help us grow and add new useful things. 
