@@ -3,6 +3,11 @@
 # ThermostatControlSwiftUI
 <br><br>
 
+These UI components for a thermostat app allow you to manage home air conditioning systems and climate control.
+
+The pack features a single-screen interface with multiple options, allowing you to change climate control modes and set temperatures in different rooms. This customization ensures optimal comfort and energy efficiency at home.
+
+The smooth gradients illustrate temperature transitions, highlighting the functionality and enhancing the user experience. We also spiced up the UI components with a sleek, enigmatic animation that showcases smooth color changes and intuitive controls for managing climate settings. It guides users through the various functions, making your future app visually appealing and easy to navigate.
 
 ![](ThermostatControlSwiftUI/Resources/readme_animation.gif)
 
